@@ -1,0 +1,35 @@
+﻿# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Large datasets & artifacts
+data/raw/*.parquet
+data/lake/*.parquet
+data/monitoring/*.parquet
+data/registry/*.db
+*.parquet
+
+# Model binaries (optional, keep directory)
+# models/*.joblib
+
+# Testing & logs
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+*.egg-info/
+results/*.json

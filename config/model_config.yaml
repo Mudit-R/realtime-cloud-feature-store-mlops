@@ -1,0 +1,39 @@
+model:
+  name: lgbm_fraud_detector
+  type: lightgbm
+  version: 1.0.0
+  target_column: is_fraud
+  timestamp_column: event_timestamp
+  entity_id_column: user_id
+
+data:
+  raw_transactions_path: data/raw/transactions.parquet
+  raw_user_profiles_path: data/raw/user_profiles.parquet
+  raw_merchant_profiles_path: data/raw/merchant_profiles.parquet
+  offline_feature_lake_path: data/lake/user_features.parquet
+  training_dataset_path: data/lake/training_dataset.parquet
+
+hyperparameters:
+  objective: binary
+  metric: auc
+  boosting_type: gbdt
+  n_estimators: 250
+  learning_rate: 0.04
+  num_leaves: 31
+  max_depth: 6
+  subsample: 0.8
+  colsample_bytree: 0.8
+  min_child_samples: 20
+  class_weight: balanced
+  random_state: 42
+  n_jobs: -1
+
+optimization:
+  n_trials: 15
+  timeout_seconds: 300
+
+thresholds:
+  default_classification_threshold: 0.50
+  high_risk_threshold: 0.80
+  alert_psi_threshold: 0.15
+  critical_psi_threshold: 0.25
