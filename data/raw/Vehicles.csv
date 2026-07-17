@@ -1,0 +1,31 @@
+Vehicle_ID,Model,Vehicle_Type,Capacity_CC_or_kWh,Manufacturing_Year,Odometer_KM,Days_Since_Last_Service,Wear_Condition
+V01,Honda Activa 6G,ICE Scooter,110.0,2022,41767,80,Normal
+V02,TVS Jupiter 125,ICE Scooter,125.0,2022,50688,110,Normal
+V03,Bajaj Pulsar 150,ICE Motorcycle,150.0,2022,12742,31,Suspension_Wear
+V04,Hero Splendor Plus,ICE Motorcycle,100.0,2020,41015,148,Normal
+V05,Ather 450X,Electric Scooter,3.7,2023,25487,148,Normal
+V06,TVS iQube,Electric Scooter,3.0,2021,47854,104,Bearing_Misalignment
+V07,Honda Shine 125,ICE Motorcycle,125.0,2023,49695,91,Normal
+V08,Suzuki Access 125,ICE Scooter,125.0,2023,21509,29,Normal
+V09,Ola S1 Pro,Electric Scooter,4.0,2022,40881,154,Brake_Warp
+V10,Bajaj Chetak,Electric Scooter,3.2,2022,44890,149,Normal
+V11,Honda Activa 6G,ICE Scooter,110.0,2020,16103,83,Normal
+V12,TVS Jupiter 125,ICE Scooter,125.0,2024,45785,31,Suspension_Wear
+V13,Bajaj Pulsar 150,ICE Motorcycle,150.0,2021,25439,82,Normal
+V14,Hero Splendor Plus,ICE Motorcycle,100.0,2022,23147,73,Normal
+V15,Ather 450X,Electric Scooter,3.7,2024,50682,71,Normal
+V16,TVS iQube,Electric Scooter,3.0,2021,23522,105,Normal
+V17,Honda Shine 125,ICE Motorcycle,125.0,2020,30386,125,Normal
+V18,Suzuki Access 125,ICE Scooter,125.0,2021,37075,155,Bearing_Misalignment
+V19,Ola S1 Pro,Electric Scooter,4.0,2022,43482,41,Normal
+V20,Bajaj Chetak,Electric Scooter,3.2,2019,14172,91,Brake_Warp
+V21,Honda Activa 6G,ICE Scooter,110.0,2021,33407,116,Normal
+V22,TVS Jupiter 125,ICE Scooter,125.0,2022,33190,36,Normal
+V23,Bajaj Pulsar 150,ICE Motorcycle,150.0,2020,45951,129,Suspension_Wear
+V24,Hero Splendor Plus,ICE Motorcycle,100.0,2022,47019,112,Normal
+V25,Ather 450X,Electric Scooter,3.7,2024,51887,69,Normal
+V26,TVS iQube,Electric Scooter,3.0,2023,43782,19,Normal
+V27,Honda Shine 125,ICE Motorcycle,125.0,2021,43250,70,Normal
+V28,Suzuki Access 125,ICE Scooter,125.0,2024,15609,27,Bearing_Misalignment
+V29,Ola S1 Pro,Electric Scooter,4.0,2021,31185,50,Normal
+V30,Bajaj Chetak,Electric Scooter,3.2,2020,23955,89,Normal
