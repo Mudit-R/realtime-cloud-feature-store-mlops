@@ -1,0 +1,9 @@
+project: cloud_feature_store
+registry: data/registry/registry.db
+provider: local
+offline_store:
+  type: file
+online_store:
+  type: redis
+  connection_string: localhost:6379
+  key_ttl: 604800
