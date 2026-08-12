@@ -1,0 +1,16 @@
+{
+  "Total_Drivers": 30,
+  "Total_Vehicles": 30,
+  "Total_Trips": 450,
+  "Total_Telemetry_Points": 11404,
+  "Total_Distance_KM": 4926.6,
+  "Avg_Driver_Safety_Score": 75.9,
+  "Safe_Drivers_Count": 22,
+  "Moderate_Drivers_Count": 3,
+  "High_Risk_Drivers_Count": 5,
+  "Avg_Vehicle_Health_Index": 84.3,
+  "Healthy_Vehicles_Count": 27,
+  "Monitor_Vehicles_Count": 0,
+  "Critical_Vehicles_Count": 3,
+  "Total_Detected_Potholes": 80
+}
