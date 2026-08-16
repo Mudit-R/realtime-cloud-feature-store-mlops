@@ -1,0 +1,19 @@
+FROM public.ecr.aws/lambda/python:3.11
+
+WORKDIR ${LAMBDA_TASK_ROOT}
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt mangum
+
+COPY src/ ./src/
+COPY feature_repo/ ./feature_repo/
+COPY models/ ./models/
+COPY data/ ./data/
+COPY setup.py .
+RUN pip install -e . --no-deps
+
+ENV PYTHONPATH="${LAMBDA_TASK_ROOT}"
+ENV USE_DYNAMODB="true"
+ENV AWS_DEFAULT_REGION="ap-south-1"
+
+CMD ["src.api.app.handler"]
