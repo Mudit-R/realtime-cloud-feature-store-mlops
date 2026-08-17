@@ -1,0 +1,70 @@
+name: Deploy to Google Cloud Run (GCP)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  GCP_PROJECT_ID: project-02ed109f-3be3-43b8-866
+  GCP_REGION: asia-south1
+  SERVICE_NAME: pulsestar-telematics-api
+  IMAGE_NAME: asia-south1-docker.pkg.dev/project-02ed109f-3be3-43b8-866/pulsestar-repo/telematics-api
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt && pip install -e .
+      - run: pytest tests/ -v --tb=short
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCP Artifact Registry
+        if: env.GCP_SA_KEY != ''
+        run: gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
+
+      - name: Run Telematics ML Pipeline
+        run: |
+          pip install -r requirements.txt && pip install -e .
+          python scripts/run_pipeline.py
+
+      - name: Build & Push Docker image
+        if: env.GCP_SA_KEY != ''
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} -t ${{ env.IMAGE_NAME }}:latest .
+          docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Google Cloud Run
+        if: env.GCP_SA_KEY != ''
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image ${{ env.IMAGE_NAME }}:latest \
+            --region ${{ env.GCP_REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --min-instances 0 \
+            --max-instances 5 \
+            --memory 1024Mi \
+            --cpu 1 \
+            --set-env-vars GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}
