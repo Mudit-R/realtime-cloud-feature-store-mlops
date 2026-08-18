@@ -90,15 +90,20 @@ async def get_all_vehicles(request: Request):
 @router.get("/api/trips/{trip_id}/telemetry")
 async def get_trip_telemetry(trip_id: str, request: Request):
     fixtures = getattr(request.app.state, "fixtures", {})
-    trip_map = fixtures.get("trip_telemetry_map", {})
-    if trip_id in trip_map:
+    trip_map = fixtures.get("trips_telemetry_sample", {})
+    if isinstance(trip_map, dict) and trip_id in trip_map:
         return trip_map[trip_id]
+    elif isinstance(trip_map, list):
+        filtered = [row for row in trip_map if row.get("Trip_ID") == trip_id]
+        if filtered:
+            return filtered
+        return trip_map[:100]
     
-    sample = fixtures.get("trips_telemetry_sample", [])
-    filtered = [row for row in sample if row.get("Trip_ID") == trip_id]
-    if filtered:
-        return filtered
-    return sample[:100]
+    # Fallback to first available trip in dictionary
+    if isinstance(trip_map, dict) and len(trip_map) > 0:
+        first_key = list(trip_map.keys())[0]
+        return trip_map[first_key]
+    return []
 
 
 @router.get("/api/potholes/gis")
