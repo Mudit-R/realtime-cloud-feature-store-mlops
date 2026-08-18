@@ -2,7 +2,7 @@ import time
 import os
 import pandas as pd
 import numpy as np
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
 import logging
 
 logger = logging.getLogger("src.features.store")
@@ -21,6 +21,7 @@ class FeatureStoreManager:
         self._cache_vehicles: Dict[str, Dict] = {}
         self._cache_telemetry: Dict[str, Dict] = {}
         self._redis_client = None
+        self.telemetry_df: Optional[pd.DataFrame] = None
 
         if use_redis or os.environ.get("USE_REDIS", "false").lower() == "true":
             self._init_redis()
@@ -55,6 +56,7 @@ class FeatureStoreManager:
             self._cache_vehicles = vehicles_df.set_index("vehicle_id").to_dict(orient="index")
 
         if telemetry_df is not None and not telemetry_df.empty:
+            self.telemetry_df = telemetry_df
             if "Trip_ID" in telemetry_df.columns:
                 self._cache_telemetry = (
                     telemetry_df.groupby("Trip_ID").last().to_dict(orient="index")
@@ -66,10 +68,13 @@ class FeatureStoreManager:
         )
 
     def get_driver_online_features(
-        self, driver_ids: List[str]
+        self, driver_ids: Union[str, List[str]]
     ) -> Tuple[pd.DataFrame, float]:
         """Retrieves real-time driver safety features with sub-3ms latency."""
         t0 = time.perf_counter()
+        if isinstance(driver_ids, str):
+            driver_ids = [driver_ids]
+
         records = []
         for d_id in driver_ids:
             driver_data = self._cache_drivers.get(d_id, {
@@ -91,11 +96,21 @@ class FeatureStoreManager:
         latency_ms = (time.perf_counter() - t0) * 1000.0
         return pd.DataFrame(records), latency_ms
 
+    def get_online_driver_features(self, driver_id: str) -> Dict[str, Any]:
+        """Dictionary lookup helper for single driver online inference."""
+        df, _ = self.get_driver_online_features([driver_id])
+        if not df.empty:
+            return df.iloc[0].to_dict()
+        return {}
+
     def get_vehicle_online_features(
-        self, vehicle_ids: List[str]
+        self, vehicle_ids: Union[str, List[str]]
     ) -> Tuple[pd.DataFrame, float]:
         """Retrieves real-time vehicle mechanical features with sub-3ms latency."""
         t0 = time.perf_counter()
+        if isinstance(vehicle_ids, str):
+            vehicle_ids = [vehicle_ids]
+
         records = []
         for v_id in vehicle_ids:
             veh_data = self._cache_vehicles.get(v_id, {
@@ -113,3 +128,10 @@ class FeatureStoreManager:
 
         latency_ms = (time.perf_counter() - t0) * 1000.0
         return pd.DataFrame(records), latency_ms
+
+    def get_online_vehicle_features(self, vehicle_id: str) -> Dict[str, Any]:
+        """Dictionary lookup helper for single vehicle online inference."""
+        df, _ = self.get_vehicle_online_features([vehicle_id])
+        if not df.empty:
+            return df.iloc[0].to_dict()
+        return {}

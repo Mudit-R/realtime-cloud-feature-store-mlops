@@ -78,3 +78,23 @@ def test_ubi_premium_endpoint(api_client):
     data = resp.json()
     assert data["discount_or_surcharge_pct"] == 25.0
     assert data["adjusted_premium_inr"] == 7500.0
+
+
+def test_live_telemetry_frame_endpoint(api_client):
+    resp = api_client.get("/api/telemetry/live-frame/V01")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert "kinematics" in data
+    assert "imu" in data
+    assert "gps" in data
+    assert "speed_kmh" in data["kinematics"]
+    assert "friction_radial_g" in data["imu"]
+
+
+def test_inject_telemetry_event_endpoint(api_client):
+    payload = {"vehicle_id": "V01", "event_type": "pothole"}
+    resp = api_client.post("/api/telemetry/inject-event", json=payload)
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "injected"
+    assert data["event_type"] == "pothole"
