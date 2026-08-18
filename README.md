@@ -1,11 +1,15 @@
 # PulseStar: Real-Time Fleet Telematics & Predictive Maintenance Cloud Platform (GCP)
 
+[![Live Demo on GCP](https://img.shields.io/badge/Live%20Demo-GCP%20Cloud%20Run-34A853.svg?style=for-the-badge&logo=googlecloud)](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)
+[![API Docs](https://img.shields.io/badge/API%20Docs-Swagger%20UI-009688.svg?style=for-the-badge&logo=fastapi)](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg?style=for-the-badge&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
-[![GCP Cloud Run](https://img.shields.io/badge/GCP-Cloud%20Run-4285F4.svg?style=for-the-badge&logo=googlecloud)](https://cloud.google.com/run)
 [![Feast Feature Store](https://img.shields.io/badge/Feature%20Store-Feast-orange.svg?style=for-the-badge)](https://feast.dev)
 [![Terraform](https://img.shields.io/badge/IaC-Terraform%20v1.5+-7B42BC.svg?style=for-the-badge&logo=terraform)](https://terraform.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+> 🚀 **Live Production Deployment**:  
+> **Web Dashboard**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)  
+> **Interactive Swagger API Docs**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
 
 An enterprise-grade, cloud-native IoT telematics and predictive maintenance platform built on **Google Cloud Platform (GCP)**. The platform ingests high-frequency tri-axial accelerometer ($A_x, A_y, A_z$), gyroscope ($\omega_x, \omega_y, \omega_z$), and GPS sensor streams from commodity delivery smartphones, transforming raw vibrations and kinematic pulses into real-time driver risk intelligence, mechanical sub-system diagnostics, automated e-FNOL crash triage, and crowdsourced road roughness GIS heatmaps.
 
@@ -38,7 +42,7 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
                      ▼                                             ▼
 +-----------------------------------------------------------------------------------------+
 |                             FEAST DUAL-TIER FEATURE STORE                               |
-|  • Online Store (GCP Memorystore Redis / Local Redis): Sub-3ms live vehicle features    |
+|  • Online Store (GCP Memorystore Redis / In-Memory): Sub-3ms live vehicle features      |
 |  • Offline Store (GCP BigQuery / Parquet Lakehouse): Historical driver & asset entities |
 +-----------------------------------------------------------------------------------------+
                                             │
@@ -68,6 +72,7 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
 
 | Metric / Parameter | Value | Details |
 | :--- | :--- | :--- |
+| **Live Production URL** | `https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app` | Hosted on GCP Cloud Run (asia-south1) |
 | **Feast Online Feature Lookup** | **&lt; 3.0 ms** | Low-latency in-memory cache / Redis |
 | **P99 Inference Latency** | **&lt; 8.0 ms** | Containerized FastAPI on Cloud Run |
 | **Driver Safety LightGBM MAE** | **0.47** | Optuna-tuned regressor on normalized telemetry |
@@ -116,12 +121,12 @@ Executes data generation, physics feature engineering, Optuna model training, an
 python scripts/run_pipeline.py
 ```
 
-### 3. Launch Web Dashboard & API Server
+### 3. Launch Web Dashboard & API Server Locally
 ```bash
 uvicorn src.api.app:app --reload --port 8000
 ```
-Open **[http://localhost:8000](http://localhost:8000)** in your browser for the Neobrutalist Dashboard.
-Open **[http://localhost:8000/docs](http://localhost:8000/docs)** for interactive OpenAPI / Swagger documentation.
+Open **[http://localhost:8000](http://localhost:8000)** for the local Dashboard.  
+Open **[http://localhost:8000/docs](http://localhost:8000/docs)** for local Swagger docs.
 
 ### 4. Run Automated Test Suite
 ```bash
@@ -132,23 +137,28 @@ pytest tests/ -v
 
 ## Google Cloud Platform (GCP) Deployment
 
+### Live Production Endpoints
+* **Production Dashboard**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)
+* **Production Swagger Docs**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
+
 ### GCP Project Configuration
 * **Project ID**: `project-02ed109f-3be3-43b8-866`
 * **Project Name**: `PulseStar`
 * **Project Number**: `281362703917`
+* **Region**: `asia-south1` (Mumbai)
 
-### Provision Cloud Infrastructure with Terraform (Always-Free Tier)
+### Infrastructure as Code (Terraform)
 ```bash
 cd infra/terraform/gcp
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 
-Resources Provisioned:
+Provisioned GCP Resources:
 * **GCP Cloud Run**: Containerized FastAPI serving (`min_instances = 0` for ₹0 idle cost).
 * **GCP Cloud Pub/Sub**: High-throughput telemetry ingestion topic (`telematics-sensor-stream`).
 * **GCP BigQuery**: Offline feature lakehouse dataset (`telematics_lakehouse`).
-* **GCP Cloud Storage**: Versioned bucket for Parquet lakehouse & model weights.
+* **GCP Cloud Storage**: Versioned bucket for Parquet lakehouse & model weights (`project-02ed109f-3be3-43b8-866-telematics-artifacts`).
 * **GCP Artifact Registry**: Docker image repository (`pulsestar-repo`).
 
 ---
