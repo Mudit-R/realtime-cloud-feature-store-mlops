@@ -1,4 +1,4 @@
-﻿# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -16,10 +16,6 @@ data/raw/*.parquet
 data/lake/*.parquet
 data/monitoring/*.parquet
 data/registry/*.db
-*.parquet
-
-# Model binaries (optional, keep directory)
-# models/*.joblib
 
 # Testing & logs
 .pytest_cache/
