@@ -19,10 +19,10 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
 
 ```
 +-----------------------------------------------------------------------------------------+
-|                                LIVE TELEMETRY SIMULATOR                                 |
-|  High-frequency IMU (Acc: Ax,Ay,Az | Gyro: Gx,Gy,Gz | GPS: Lat,Lon) @ 10-50 Hz Stream   |
+|                       LIVE 20Hz TELEMETRY STREAMING & KINEMATICS ENGINE                 |
+|  6-DOF IMU (Ax, Ay, Az, Gx, Gy, Gz) + GPS Waypoint Interpolation + Engine Dynamics      |
 +-----------------------------------------------------------------------------------------+
-                                            │ (JSON/Protobuf over HTTPS/WebSocket)
+                                            │ (JSON/Protobuf over WebSockets / PubSub)
                                             ▼
 +-----------------------------------------------------------------------------------------+
 |                             INGESTION: GCP CLOUD PUB/SUB                                |
@@ -51,20 +51,43 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
 +------------------------------------------+  +------------------------------------------+
 |          ML TRAINING & DRIFT             |  |      INFERENCE & TELEMATICS API          |
 |  - Optuna + LightGBM Driver Risk Model   |  |  FastAPI on GCP Cloud Run                |
-|  - Vehicle RUL Predictive Maintenance    |  |  - `/v1/predict/driver-risk` (Live)      |
-|  - Vertex AI / PSI Continuous Monitoring |  |  - `/v1/predict/vehicle-rul`             |
-|    (Auto-retrain trigger at PSI >= 0.25) |  |  - `/v1/triage/crash-event` (e-FNOL)     |
+|  - Vehicle RUL Predictive Maintenance    |  |  - `/ws/telematics/live/{id}` (20Hz HUD) |
+|  - Vertex AI / PSI Continuous Monitoring |  |  - `/v1/predict/driver-risk` (Live)      |
+|    (Auto-retrain trigger at PSI >= 0.25) |  |  - `/v1/predict/vehicle-rul`             |
+|                                          |  |  - `/v1/triage/crash-event` (e-FNOL)     |
 +------------------------------------------+  +------------------------------------------+
                                                                    │
                                                                    ▼
 +-----------------------------------------------------------------------------------------+
 |                  NEOBRUTALIST FLEET TELEMATICS & GIS DASHBOARD                          |
-|  • Real-time GIS Route Breadcrumbs & Speed Heatmaps (Leaflet.js)                        |
-|  • Live Tri-Axial IMU Waveform Oscilloscope (Chart.js / WebSockets)                     |
-|  • Driver Safety Cohort Clustering & Automated Coaching Engine                          |
-|  • Component-level Predictive Maintenance Modals (Suspension, Alignment, Brakes)        |
+|  • 🏎️ F1 2D G-G Friction Circle HUD Canvas with Dynamic Fading Trajectory Trail          |
+|  • ⚡ 20Hz Kinematic Instruments: Speedometer (km/h), RPM, Throttle %, Brake Bar        |
+|  • 🗺️ Synchronized Real-Time Moving Vehicle on Leaflet GIS Map with Heading Vector       |
+|  • 💥 Chaos & Sensor Anomaly Injector (Pothole Shock, Hard Brake, High-G Swerve, Crash) |
 +-----------------------------------------------------------------------------------------+
 ```
+
+---
+
+## 📡 Where Does the Live Data Come From?
+
+The platform operates on a **dual-tier real-time data architecture**:
+
+### 1. High-Frequency 20Hz Kinematics & Physics Engine (`src/data/telemetry_streamer.py`)
+For live cockpit monitoring, a physics-calibrated stream engine simulates high-rate edge sensors:
+* **6-DOF IMU Simulation**: Computes lateral acceleration ($A_x$), longitudinal acceleration ($A_y$), and gravity-aligned vertical vibration ($A_z$) incorporating road roughness, suspension dampening, and engine vibrations.
+* **Rotational Dynamics**: Tri-axial gyroscopic rotation ($\omega_x, \omega_y, \omega_z$) calibrated for motorcycle lean angles and cornering yaw rates.
+* **Calibrated Mumbai GIS Delivery Corridor**: Interpolates real GPS waypoints (Bandra $\rightarrow$ BKC $\rightarrow$ Airport Highway), calculating dynamic true heading ($\theta$) and distance-traveled breadcrumbs.
+* **Powertrain Kinematics**: Computes RPM from wheel speed and gear ratios, throttle modulation, and hydraulic brake pressure ($\text{bar}$).
+
+### 2. GCP Cloud Pub/Sub & WebSockets Streaming Pipeline
+* Edge smartphones publish 10,000+ sensor messages/second to GCP Cloud Pub/Sub (`telematics-sensor-stream`).
+* FastAPI serves bidirectional WebSockets (`/ws/telematics/live/{vehicle_id}`) streaming 20 frames/sec with **sub-10ms delivery latency**.
+* **Interactive Chaos Injection**: Users can inject live physical anomalies (`pothole`, `harsh_brake`, `swerve`, `crash`) via WebSocket or REST (`/api/telemetry/inject-event`).
+
+### 3. BigQuery Telematics Lakehouse (Historical Records)
+* All aggregated trips, driver baselines, and vehicle health logs are partitioned and stored in Google BigQuery (`telematics_lakehouse`).
+* The **Trip Waveforms & Replay** tab loads recorded historical runs directly from BigQuery Parquet partitions.
 
 ---
 
@@ -73,11 +96,12 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
 | Metric / Parameter | Value | Details |
 | :--- | :--- | :--- |
 | **Live Production URL** | `https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app` | Hosted on GCP Cloud Run (asia-south1) |
+| **Live Streaming Frequency** | **20 Hz (20 FPS)** | Sub-10ms WebSocket frame delivery |
 | **Feast Online Feature Lookup** | **&lt; 3.0 ms** | Low-latency in-memory cache / Redis |
 | **P99 Inference Latency** | **&lt; 8.0 ms** | Containerized FastAPI on Cloud Run |
 | **Driver Safety LightGBM MAE** | **0.47** | Optuna-tuned regressor on normalized telemetry |
 | **Vehicle RUL Prediction MAE** | **15.6 Days** | Predictive maintenance regression |
-| **Sensor Processing Throughput** | **10,000+ msg/s** | GCP Cloud Pub/Sub streaming ingestion |
+| **Sensor Ingestion Throughput** | **10,000+ msg/s** | GCP Cloud Pub/Sub streaming topic |
 | **Cloud Idle Cost** | **₹0.00 / mo** | 100% GCP Always-Free Tier compliant (scale-to-zero) |
 
 ---
@@ -86,15 +110,14 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
 
 ### 1. Driver Behavior & Safety Risk Scoring
 * **Mileage-Normalized Maneuvers**: Eliminates distance bias by calibrating all harsh events strictly per 100 km:
-  $$\text{HBR}_{100} = \left(\frac{\text{Harsh Brakes}}{\text{Distance (km)}}\right) \times 100, \quad \text{RAR}_{100} = \left(\frac{\text{Rapid Accels}}{\text{Distance (km)}}\right) \times 100, \quad \text{HCR}_{100} = \left(\frac{\text{Harsh Turns}}{\text{Distance (km)}}\right) \times 100$$
+  $$\text{HBR}_{100} = \left(\frac{\text{Harsh Brakes}}{\text{Distance (km)}}\right) \times 100, \quad \text{RAR}_{100} = \left(\frac{\text{Rapid Accels}}{\text{Distance (km)}}\right) \times 100$$
 * **Composite Safety Score (0-100)**: Multi-factor risk formulation incorporating speed compliance ($SCS$) and late-night exposure ($22:00-05:00$).
 * **Automated AI Coaching**: Generates context-aware riding recommendations per driver.
 
 ### 2. Vehicle Predictive Maintenance Diagnostics
-* **Suspension Degradation ($\text{Vib}_{\text{RMS}}$)**: Measures vertical chassis acceleration RMS deviation from gravity ($9.81\text{ m/s}^2$) to detect blown fork damping and spring fatigue:
+* **Suspension Degradation ($\text{Vib}_{\text{RMS}}$)**: Measures vertical chassis acceleration RMS deviation from gravity ($9.81\text{ m/s}^2$) to detect blown fork damping:
   $$\text{Vib}_{\text{RMS}} = \sqrt{\frac{1}{N}\sum_{t=1}^N (A_{z,t} - 9.81)^2}$$
 * **Steering Stem Bearing Play ($\text{Gyro}_{\text{Jitter}}$)**: High-frequency rotational noise ($\text{StdDev}(\omega_z) > 12^\circ/\text{s}$) signals loose bearings or bent wheel rims.
-* **Braking Disc Rotor Warp**: Deceleration judder and vertical IMU fluctuation during heavy braking detect uneven rotor wear.
 * **Remaining Useful Life (RUL)**: Multi-factor urgency index estimating operational days before grounding.
 
 ### 3. Automated e-FNOL Crash Triage & SOS
@@ -116,7 +139,6 @@ pip install -e .
 ```
 
 ### 2. Run End-to-End Pipeline
-Executes data generation, physics feature engineering, Optuna model training, and feature store cache warming:
 ```bash
 python scripts/run_pipeline.py
 ```
@@ -126,7 +148,7 @@ python scripts/run_pipeline.py
 uvicorn src.api.app:app --reload --port 8000
 ```
 Open **[http://localhost:8000](http://localhost:8000)** for the local Dashboard.  
-Open **[http://localhost:8000/docs](http://localhost:8000/docs)** for local Swagger docs.
+Open **[http://localhost:8000/docs](http://localhost:8000/docs)** for Swagger API docs.
 
 ### 4. Run Automated Test Suite
 ```bash
@@ -140,12 +162,6 @@ pytest tests/ -v
 ### Live Production Endpoints
 * **Production Dashboard**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)
 * **Production Swagger Docs**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
-
-### GCP Project Configuration
-* **Project ID**: `project-02ed109f-3be3-43b8-866`
-* **Project Name**: `PulseStar`
-* **Project Number**: `281362703917`
-* **Region**: `asia-south1` (Mumbai)
 
 ### Infrastructure as Code (Terraform)
 ```bash
@@ -167,6 +183,9 @@ Provisioned GCP Resources:
 
 ```
 GET  /                             # Neobrutalist Web Dashboard
+WS   /ws/telematics/live/{id}      # 20Hz High-Frequency WebSocket Stream
+GET  /api/telemetry/live-frame/{id}# Real-time kinematic frame
+POST /api/telemetry/inject-event   # Chaos Anomaly Injection (pothole, brake, swerve, crash)
 GET  /api/fleet/summary            # Fleet KPI aggregates
 GET  /api/drivers                  # Driver safety rankings & coaching
 GET  /api/vehicles                 # Vehicle diagnostics & RUL days
