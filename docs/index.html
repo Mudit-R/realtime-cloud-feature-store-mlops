@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PulseStar | Real-Time Fleet Telematics & AI Analytics Platform</title>
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap"
+    rel="stylesheet">
+
   <!-- Leaflet GIS & ChartJS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,6 +22,7 @@
   <!-- Neobrutalism App Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <div class="wrapper">
@@ -57,6 +61,16 @@
         </li>
 
         <li class="side-nav-title">Real-Time Streams & GIS</li>
+
+        <li>
+          <button class="side-nav-link" data-tab="live-cockpit" id="nav-cockpit">
+            <div class="link-content">
+              <i data-lucide="gauge"></i>
+              <span>Live Cockpit & HUD</span>
+            </div>
+            <span class="side-badge badge-red pulse-badge">20Hz LIVE</span>
+          </button>
+        </li>
 
         <li>
           <button class="side-nav-link" data-tab="trip-explorer" id="nav-trips">
@@ -129,13 +143,14 @@
 
       <!-- Content Body -->
       <main class="content-body">
-        
+
         <!-- ==================== TAB 1: DRIVER BEHAVIOUR ==================== -->
         <section id="driver-dashboard" class="tab-pane active">
           <div class="page-title-box">
             <div>
               <h1>Driver Safety & Risk Intelligence</h1>
-              <p>Physics-calibrated driver scoring: harsh braking, rapid throttle, high-lean swerves, and speed compliance.</p>
+              <p>Physics-calibrated driver scoring: harsh braking, rapid throttle, high-lean swerves, and speed
+                compliance.</p>
             </div>
             <div class="neo-tag">
               <i data-lucide="shield-alert"></i>
@@ -158,7 +173,7 @@
 
             <div class="neo-stat-card">
               <div class="stat-content">
-                <h4>Safe & Exemplary</h4>
+                <h4>Safe &amp; Exemplary</h4>
                 <div class="stat-number" id="kpi-safe-count">--</div>
                 <div class="stat-sub">Score &ge; 82 (Low Risk)</div>
               </div>
@@ -190,53 +205,123 @@
             </div>
           </div>
 
+          <!-- Driver Analytics Charts Row -->
+          <div class="analytics-charts-row">
+            <!-- Safety Score Distribution Bar Chart -->
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="bar-chart-2"></i> Safety Score Distribution</h3>
+                  <p>Cohort breakdown across 30 fleet delivery riders</p>
+                </div>
+                <span class="neo-tag">Fleet Benchmark</span>
+              </div>
+              <div style="height:190px; position:relative;">
+                <canvas id="scoreDistChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <span>↗ 73.3% in Safe Tier</span>
+                <span style="color:var(--text-dim)">Normalized / 100km</span>
+              </div>
+            </div>
+
+            <!-- 5-Axis Telematics Risk Radar -->
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="radar"></i> 5-Axis Telematics Risk Radar</h3>
+                  <p>Safe cohort vs. High-Risk cohort comparison</p>
+                </div>
+                <span class="neo-tag">IMU + GPS Profile</span>
+              </div>
+              <div style="height:190px; position:relative;">
+                <canvas id="driverRadarChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <span style="display:flex;align-items:center;gap:0.4rem;"><span style="display:inline-block;width:10px;height:10px;background:#a3e636;border:1.5px solid #000;border-radius:2px;"></span> Safe</span>
+                <span style="display:flex;align-items:center;gap:0.4rem;"><span style="display:inline-block;width:10px;height:10px;background:#ff6b6b;border:1.5px solid #000;border-radius:2px;"></span> High Risk</span>
+              </div>
+            </div>
+
+            <!-- Braking vs Acceleration Scatter -->
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="scatter-chart"></i> Brake vs Accel Dynamics</h3>
+                  <p>Harsh braking rate vs. rapid acceleration /100km</p>
+                </div>
+                <span class="neo-tag">Kinematics</span>
+              </div>
+              <div style="height:190px; position:relative;">
+                <canvas id="brakeAccelScatter"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <span>30 Active Delivery Riders</span>
+                <span style="color:var(--text-dim)">G-force Threshold</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Controls Bar -->
           <div class="neo-controls">
             <div class="filter-item">
               <span>Risk Tier:</span>
               <select class="filter-select" id="driver-risk-filter">
                 <option value="ALL">All Cohorts (30)</option>
-                <option value="Safe & Exemplary">Safe &amp; Exemplary</option>
+                <option value="Safe &amp; Exemplary">Safe &amp; Exemplary</option>
                 <option value="Moderate Risk">Moderate Risk</option>
-                <option value="High Risk / Aggressive">High Risk / Aggressive</option>
+                <option value="High Risk">High Risk / Aggressive</option>
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <span>Zone:</span>
+              <select class="filter-select" id="driver-zone-filter">
+                <option value="ALL">All Zones</option>
+                <option value="North">North</option>
+                <option value="South">South</option>
+                <option value="East">East</option>
+                <option value="West">West</option>
+                <option value="Central">Central</option>
               </select>
             </div>
 
             <div class="filter-item">
               <span>Sort By:</span>
-              <select class="filter-select" id="driver-sort-select">
-                <option value="score_desc">Safety Score (High to Low)</option>
-                <option value="score_asc">Safety Score (Low to High)</option>
-                <option value="braking_desc">Harsh Braking Rate</option>
+              <select class="filter-select" id="driver-sort-by">
+                <option value="score_desc">Safety Score (High &rarr; Low)</option>
+                <option value="score_asc">Safety Score (Low &rarr; High)</option>
+                <option value="brakes_desc">Harsh Braking Rate</option>
                 <option value="speeding_desc">Overspeeding %</option>
               </select>
             </div>
 
             <div class="view-btn-group">
-              <button class="view-btn active" id="btn-view-cards" title="Grid View">
+              <button class="view-btn active" id="btn-driver-cards" title="Grid View">
                 <i data-lucide="grid"></i> Cards
               </button>
-              <button class="view-btn" id="btn-view-table" title="Table View">
+              <button class="view-btn" id="btn-driver-table" title="Table View">
                 <i data-lucide="list"></i> Table
               </button>
             </div>
           </div>
 
-          <!-- Drivers Cards Grid Container -->
-          <div id="driver-cards-container" class="entities-grid"></div>
+          <!-- Drivers Cards Grid -->
+          <div class="entities-grid" id="drivers-cards-container">
+            <!-- Populated via app.js -->
+          </div>
 
-          <!-- Drivers Table Container -->
-          <div id="driver-table-container" class="neo-table-wrapper" style="display: none;">
+          <!-- Drivers Table View -->
+          <div id="drivers-table-container" class="neo-table-wrapper" style="display: none;">
             <table class="neo-table">
               <thead>
                 <tr>
-                  <th>Driver</th>
+                  <th>Rider Name &amp; ID</th>
                   <th>Archetype</th>
                   <th>Zone / Shift</th>
                   <th>Safety Score</th>
                   <th>Harsh Brake /100km</th>
                   <th>Rapid Accel /100km</th>
-                  <th>Harsh Turn /100km</th>
                   <th>Speed Compliance</th>
                   <th>Action</th>
                 </tr>
@@ -246,16 +331,16 @@
           </div>
         </section>
 
-        <!-- ==================== TAB 2: VEHICLE HEALTH ==================== -->
+        <!-- ==================== TAB 2: VEHICLE DIAGNOSTICS ==================== -->
         <section id="vehicle-dashboard" class="tab-pane">
           <div class="page-title-box">
             <div>
-              <h1>Vehicle Health & Predictive Maintenance</h1>
-              <p>IMU spectral vibration analysis, steering bearing jitter, and remaining useful life (RUL) estimation.</p>
+              <h1>Vehicle Health &amp; Predictive Maintenance (RUL)</h1>
+              <p>IMU-derived vibration RMS, steering gyro jitter, and remaining useful life before grounding.</p>
             </div>
             <div class="neo-tag">
               <i data-lucide="activity"></i>
-              <span>Vibration RMS &amp; Gyro Jitter</span>
+              <span>Physics Degradation Index</span>
             </div>
           </div>
 
@@ -263,31 +348,31 @@
           <div class="stat-cards-grid">
             <div class="neo-stat-card">
               <div class="stat-content">
-                <h4>Avg Fleet Health Index</h4>
+                <h4>Fleet Health Index</h4>
                 <div class="stat-number" id="kpi-avg-health">--</div>
-                <div class="stat-sub">Out of 100 points</div>
+                <div class="stat-sub">Composite asset vitality</div>
               </div>
-              <div class="stat-icon-wrapper lime">
-                <i data-lucide="cpu"></i>
+              <div class="stat-icon-wrapper blue">
+                <i data-lucide="heart-pulse"></i>
               </div>
             </div>
 
             <div class="neo-stat-card">
               <div class="stat-content">
-                <h4>Optimal Assets</h4>
-                <div class="stat-number" id="kpi-healthy-count">--</div>
-                <div class="stat-sub">Health Index &ge; 80</div>
+                <h4>Optimal Condition</h4>
+                <div class="stat-number" id="kpi-optimal-count">--</div>
+                <div class="stat-sub">RUL &ge; 90 Days</div>
               </div>
               <div class="stat-icon-wrapper green">
-                <i data-lucide="check-circle"></i>
+                <i data-lucide="check-check"></i>
               </div>
             </div>
 
             <div class="neo-stat-card">
               <div class="stat-content">
-                <h4>Scheduled Service Due</h4>
-                <div class="stat-number" id="kpi-monitor-count">--</div>
-                <div class="stat-sub">Moderate Wear (Score 60-79)</div>
+                <h4>Monitor / Wear</h4>
+                <div class="stat-number" id="kpi-urgent-count">--</div>
+                <div class="stat-sub">Moderate Degradation</div>
               </div>
               <div class="stat-icon-wrapper orange">
                 <i data-lucide="clock"></i>
@@ -296,269 +381,613 @@
 
             <div class="neo-stat-card">
               <div class="stat-content">
-                <h4>Critical Grounding Alert</h4>
+                <h4>Critical Grounding</h4>
                 <div class="stat-number" id="kpi-critical-count">--</div>
-                <div class="stat-sub">Immediate Maintenance Required</div>
+                <div class="stat-sub">Immediate inspection required</div>
               </div>
               <div class="stat-icon-wrapper purple">
-                <i data-lucide="alert-triangle"></i>
+                <i data-lucide="alert-circle"></i>
               </div>
             </div>
           </div>
 
-          <!-- Vehicle Controls Bar -->
-          <div class="neo-controls">
-            <div class="filter-item">
-              <span>Maintenance Urgency:</span>
-              <select class="filter-select" id="vehicle-urgency-filter">
-                <option value="ALL">All Assets (30)</option>
-                <option value="Low">Optimal (Low Urgency)</option>
-                <option value="Medium">Medium (Service Due)</option>
-                <option value="Immediate">Immediate Grounding</option>
-              </select>
+          <!-- Vehicle Analytics Charts Row -->
+          <div class="vehicle-analytics-row">
+            <!-- Fleet Health Distribution Donut Chart -->
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="pie-chart"></i> Fleet Health Degradation Status</h3>
+                  <p>Proportion of vehicles across health categories</p>
+                </div>
+                <span class="neo-tag">Vitality Split</span>
+              </div>
+              <div style="height:210px; position:relative;">
+                <canvas id="vehicleHealthPie"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <span>30 Tracked Fleet Assets</span>
+                <span style="color:var(--text-dim)">Physics Telematics</span>
+              </div>
             </div>
 
-            <div class="filter-item">
-              <span>Powertrain Type:</span>
-              <select class="filter-select" id="vehicle-type-filter">
-                <option value="ALL">All Types</option>
-                <option value="Electric Scooter">Electric Scooter (EV)</option>
-                <option value="ICE Scooter">ICE Scooter</option>
-                <option value="ICE Motorcycle">ICE Motorcycle</option>
-              </select>
+            <!-- Remaining Useful Life (RUL) Horizontal Bar Chart -->
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="clock"></i> Remaining Useful Life (RUL Days)</h3>
+                  <p>Top assets requiring scheduled preventative maintenance</p>
+                </div>
+                <span class="neo-tag">Maintenance Priority</span>
+              </div>
+              <div style="height:210px; position:relative;">
+                <canvas id="vehicleRulChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <span>Days until mechanical service threshold</span>
+                <span style="color:var(--text-dim)">LightGBM RUL</span>
+              </div>
             </div>
           </div>
 
-          <!-- Vehicle Cards Grid -->
-          <div id="vehicle-cards-container" class="entities-grid"></div>
+          <!-- Controls Bar -->
+          <div class="neo-controls">
+            <div class="filter-item">
+              <span>Status:</span>
+              <select class="filter-select" id="vehicle-status-filter">
+                <option value="ALL">All Assets (30)</option>
+                <option value="Optimal">Optimal / Healthy</option>
+                <option value="Monitor">Monitor / Moderate Wear</option>
+                <option value="Critical">Critical / Service Due</option>
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <span>Vehicle Type:</span>
+              <select class="filter-select" id="vehicle-type-filter">
+                <option value="ALL">All Types</option>
+                <option value="ICE Scooter">ICE Scooter</option>
+                <option value="EV Delivery Bike">EV Delivery Bike</option>
+                <option value="Cargo 3-Wheeler">Cargo 3-Wheeler</option>
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <span>Sort By:</span>
+              <select class="filter-select" id="vehicle-sort-by">
+                <option value="rul_asc">RUL Days (Lowest &rarr; Highest)</option>
+                <option value="rul_desc">RUL Days (Highest &rarr; Lowest)</option>
+                <option value="health_desc">Health Index (Highest)</option>
+                <option value="vib_desc">Vibration RMS (Highest)</option>
+                <option value="odo_desc">Odometer (Highest)</option>
+              </select>
+            </div>
+
+            <div class="view-btn-group">
+              <button class="view-btn active" id="btn-veh-cards" title="Grid View">
+                <i data-lucide="grid"></i> Cards
+              </button>
+              <button class="view-btn" id="btn-veh-table" title="Table View">
+                <i data-lucide="list"></i> Table
+              </button>
+            </div>
+          </div>
+
+          <!-- Vehicles Grid -->
+          <div class="entities-grid" id="vehicles-cards-container">
+            <!-- Populated via app.js -->
+          </div>
+
+          <!-- Vehicles Table View -->
+          <div id="vehicles-table-container" class="neo-table-wrapper" style="display: none;">
+            <table class="neo-table">
+              <thead>
+                <tr>
+                  <th>Vehicle ID &amp; Model</th>
+                  <th>Type / Year</th>
+                  <th>Health Index</th>
+                  <th>Status</th>
+                  <th>RUL (Days)</th>
+                  <th>Vibration RMS</th>
+                  <th>Days Since Service</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="vehicle-table-body"></tbody>
+            </table>
+          </div>
         </section>
 
-        <!-- ==================== TAB 3: TRIP TELEMETRY & GIS ==================== -->
+        <!-- ==================== TAB: LIVE COCKPIT & WEBSOCKET HUD ==================== -->
+        <section id="live-cockpit" class="tab-pane">
+          <div class="page-title-box cockpit-title-box">
+            <div class="cockpit-title-left">
+              <h1>Live Telematics Cockpit &amp; Kinematics HUD</h1>
+              <p>Synchronized 20Hz WebSocket streaming with 2D Friction Circle HUD, live GPS trajectory, and real-time G-force physics.</p>
+            </div>
+            <div class="hud-controls-deck">
+              <button class="btn-neo btn-pause-stream" id="btn-toggle-stream">
+                <i data-lucide="pause" id="stream-btn-icon"></i>
+                <span id="btn-stream-text">Pause Stream</span>
+              </button>
+              <div class="hud-fps-pill" id="live-stream-badge">
+                <span class="live-dot"></span>
+                <span id="stream-fps-display">20 FPS • WEBSOCKET</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Row: 2D G-G Friction Circle HUD + Kinematic Instrument Cluster -->
+          <div class="cockpit-top-grid">
+            <!-- 1. G-G Friction Circle HUD -->
+            <div class="neo-card friction-hud-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="crosshair"></i>
+                  <h3>2D G-G Friction Circle HUD</h3>
+                </div>
+                <div class="friction-legend">
+                  <span class="legend-item"><span class="dot-green"></span> Cruise</span>
+                  <span class="legend-item"><span class="dot-yellow"></span> &gt;0.3g</span>
+                  <span class="legend-item"><span class="dot-red"></span> &gt;0.6g</span>
+                </div>
+              </div>
+              <div class="friction-canvas-container">
+                <canvas id="ggCanvas" width="280" height="240"></canvas>
+                <div class="gg-readout">
+                  <div class="readout-item">
+                    <span class="label">RADIAL G</span>
+                    <span class="value" id="hud-radial-g">0.06 g</span>
+                  </div>
+                  <div class="readout-item">
+                    <span class="label">LAT G (AX)</span>
+                    <span class="value" id="hud-lat-g">+0.02 g</span>
+                  </div>
+                  <div class="readout-item">
+                    <span class="label">LONG G (AY)</span>
+                    <span class="value" id="hud-long-g">-0.06 g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Kinematic Instrument Cluster -->
+            <div class="neo-card instruments-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="gauge"></i>
+                  <h3>Kinematic Instrument Cluster</h3>
+                </div>
+                <span class="asset-pill" id="hud-vehicle-id">ASSET: V01</span>
+              </div>
+
+              <div class="instruments-grid">
+                <!-- Ground Speed Box -->
+                <div class="instrument-box speed-box">
+                  <span class="instrument-label">GROUND SPEED</span>
+                  <div class="speed-value-wrap">
+                    <span class="digital-huge" id="hud-speed">26.8</span>
+                    <span class="unit">KM/H</span>
+                  </div>
+                  <div class="bar-track speed-track">
+                    <div class="bar-fill lime" id="hud-speed-bar" style="width: 38%;"></div>
+                  </div>
+                </div>
+
+                <!-- RPM & Throttle & Brake -->
+                <div class="instrument-box gauge-card">
+                  <div class="gauge-row">
+                    <span class="instrument-label">ENGINE RPM</span>
+                    <span class="mono-value" id="hud-rpm">3,169</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill lime" id="hud-rpm-bar" style="width: 48%;"></div>
+                  </div>
+
+                  <div class="gauge-row mt-2">
+                    <span class="instrument-label">THROTTLE</span>
+                    <span class="mono-value" id="hud-throttle">0%</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill lime" id="hud-throttle-bar" style="width: 0%;"></div>
+                  </div>
+
+                  <div class="gauge-row mt-2">
+                    <span class="instrument-label">BRAKE PRESSURE</span>
+                    <span class="mono-value" id="hud-brake">8.7 bar</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill red" id="hud-brake-bar" style="width: 25%;"></div>
+                  </div>
+                </div>
+
+                <!-- Kinematics & Live Safety Score -->
+                <div class="instrument-box metrics-card">
+                  <div class="gauge-row">
+                    <span class="instrument-label">HEADING / BEARING</span>
+                    <span class="mono-value" id="hud-heading">216.7°</span>
+                  </div>
+                  <div class="gauge-row mt-2">
+                    <span class="instrument-label">SUSPENSION VIB (RMS)</span>
+                    <span class="mono-value" id="hud-vib-rms">0.231 g</span>
+                  </div>
+                  <div class="gauge-row mt-2">
+                    <span class="instrument-label">LIVE SAFETY SCORE</span>
+                    <span class="mono-value score-glow" id="hud-instant-score">91.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle Row: Chaos & Anomaly Injector Bar -->
+          <div class="neo-card chaos-injector-card">
+            <div class="injector-label-group">
+              <i data-lucide="zap"></i>
+              <span class="injector-title">Chaos &amp; Anomaly Injector:</span>
+            </div>
+            <div class="injector-buttons-group">
+              <button class="btn-neo btn-inject btn-pothole" id="btn-inject-pothole" onclick="injectChaosEvent('pothole')">
+                <i data-lucide="zap"></i>
+                <span>Inject Pothole (2.8g)</span>
+              </button>
+              <button class="btn-neo btn-inject btn-brake" id="btn-inject-brake" onclick="injectChaosEvent('harsh_brake')">
+                <span class="btn-dot-pink"></span>
+                <span>Hard Brake (-4.6 m/s²)</span>
+              </button>
+              <button class="btn-neo btn-inject btn-swerve" id="btn-inject-swerve" onclick="injectChaosEvent('swerve')">
+                <i data-lucide="zap"></i>
+                <span>High-G Swerve (32°/s)</span>
+              </button>
+              <button class="btn-neo btn-inject btn-crash" id="btn-inject-crash" onclick="injectChaosEvent('crash')">
+                <i data-lucide="alert-octagon"></i>
+                <span>Crash Pulse (24g)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Live Moving Leaflet GIS + Real-Time Oscilloscope + Incident Log -->
+          <div class="cockpit-bottom-grid">
+            <!-- Live Leaflet GPS Tracking -->
+            <div class="neo-card live-map-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="map-pin"></i>
+                  <div>
+                    <h3>Real-Time Route Telemetry &amp; Waypoint Tracking</h3>
+                    <div class="route-subtitle" id="hud-route-segment">Andheri East Logistics Hub &rarr; Bandra West Terminal</div>
+                  </div>
+                </div>
+              </div>
+              <div id="liveCockpitMap" class="live-cockpit-map"></div>
+            </div>
+
+            <!-- Real-Time Waveform Oscilloscopes + Incident Stream -->
+            <div class="neo-card live-waveforms-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="activity"></i>
+                  <h3>20Hz Oscilloscope &amp; Incident Ticker</h3>
+                </div>
+                <span class="status-pill status-nominal" id="hud-status-badge">NOMINAL</span>
+              </div>
+
+              <div class="oscilloscope-legend">
+                <span class="legend-chip"><span class="chip-color red"></span> Ax (Lateral)</span>
+                <span class="legend-chip"><span class="chip-color blue"></span> Ay (Longitudinal)</span>
+              </div>
+
+              <div class="chart-container-oscilloscope">
+                <canvas id="liveAccWaveformChart"></canvas>
+              </div>
+
+              <div class="incident-stream-box">
+                <div class="stream-header">
+                  <i data-lucide="list"></i>
+                  <span>LIVE EVENT AUDIT STREAM</span>
+                </div>
+                <div class="incident-stream-list" id="incident-ticker-list">
+                  <div class="incident-item nominal">
+                    <span class="time">[00:00:00]</span>
+                    <span class="msg">WebSocket synchronized with PulseStar 20Hz Telemetry Stream</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 3: TRIP WAVEFORMS & GIS ==================== -->
         <section id="trip-explorer" class="tab-pane">
           <div class="page-title-box">
             <div>
-              <h1>Trip Telemetry & Sensor Oscilloscope</h1>
-              <p>Synchronized GPS breadcrumbs, speed heatmap, and 3-axis IMU accelerometer & gyroscope waveforms.</p>
+              <h1>Trip Telemetry Waveforms & GIS Analysis</h1>
+              <p>Interactive high-frequency GPS breadcrumbs with synchronized tri-axial accelerometer & gyroscope
+                oscilloscopes.</p>
             </div>
             <div class="neo-tag">
-              <i data-lucide="map-pin"></i>
-              <span>High-Frequency IMU Telemetry</span>
+              <i data-lucide="navigation"></i>
+              <span>High-Frequency IMU + GPS</span>
             </div>
           </div>
 
+          <!-- Trip Selector Controls -->
           <div class="neo-controls">
             <div class="filter-item">
-              <span>Select Sample Trip:</span>
-              <select class="filter-select" id="trip-select">
-                <option value="T001">Trip T001 (Aarav Sharma - Safe Profile)</option>
-                <option value="T016">Trip T016 (Rohan Verma - Distracted Profile)</option>
-                <option value="T046">Trip T046 (Aditya Patel - Aggressive Profile)</option>
-                <option value="T100">Trip T100 (Vikram Malhotra - Suspension Fault)</option>
-                <option value="T200">Trip T200 (Karan Singh - Bearing Jitter)</option>
+              <span>Select Trip:</span>
+              <select class="filter-select" id="trip-select-dropdown">
+                <!-- Populated via app.js -->
               </select>
             </div>
-            <div class="trend-badge">
-              <i data-lucide="wifi"></i>
-              <span id="telemetry-rows-info">Loading telemetry stream...</span>
+
+            <div class="filter-item">
+              <span>Driver:</span>
+              <span class="mono-badge" id="trip-driver-badge">D01</span>
+            </div>
+
+            <div class="filter-item">
+              <span>Vehicle:</span>
+              <span class="mono-badge" id="trip-vehicle-badge">V01</span>
+            </div>
+
+            <div class="filter-item">
+              <span>Trip Risk:</span>
+              <span class="side-badge badge-green" id="trip-risk-badge">SAFE</span>
             </div>
           </div>
 
-          <!-- GIS Map Card -->
-          <div class="neo-chart-card" style="margin-bottom: 2rem;">
-            <div class="neo-chart-header">
-              <div class="neo-chart-title-group">
-                <h3><i data-lucide="map"></i> Route GPS Breadcrumbs & GIS Heatmap</h3>
-                <p>Color-coded route path showing speed variations and road surface anomalies.</p>
-              </div>
-            </div>
-            <div id="leaflet-map" style="height: 380px; width: 100%; border: 2px solid #000; border-radius: 8px;"></div>
-          </div>
-
-          <!-- 3-Axis IMU Waveforms Grid -->
-          <div class="grid-2">
-            <div class="neo-chart-card">
-              <div class="neo-chart-header">
-                <div class="neo-chart-title-group">
-                  <h3><i data-lucide="activity"></i> Tri-Axial Accelerometer (Ax, Ay, Az)</h3>
-                  <p>Lateral (Ax), Longitudinal (Ay), and Vertical (Az) acceleration in m/s²</p>
+          <!-- Trip Detail Grid (Map + Oscilloscopes) -->
+          <div class="trip-layout-grid">
+            <!-- Map Container -->
+            <div class="neo-card map-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="map"></i>
+                  <h3>GPS Route Breadcrumb Replay</h3>
+                </div>
+                <div class="map-legend">
+                  <span class="legend-item"><span class="dot green"></span> Cruising</span>
+                  <span class="legend-item"><span class="dot red"></span> Harsh Event</span>
                 </div>
               </div>
-              <div class="chart-box">
-                <canvas id="accel-chart"></canvas>
-              </div>
+              <div id="tripMap" class="trip-map-container"></div>
             </div>
 
-            <div class="neo-chart-card">
-              <div class="neo-chart-header">
-                <div class="neo-chart-title-group">
-                  <h3><i data-lucide="compass"></i> Tri-Axial Gyroscope (Gx, Gy, Gz)</h3>
-                  <p>Pitch (Gx), Roll (Gy), and Yaw Rate (Gz) angular velocity in deg/s</p>
+            <!-- Oscilloscopes Container -->
+            <div class="neo-card waveforms-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="activity"></i>
+                  <h3>3-Axis Accelerometer (Ax, Ay, Az)</h3>
                 </div>
+                <span class="neo-tag">m/s²</span>
               </div>
-              <div class="chart-box">
-                <canvas id="gyro-chart"></canvas>
+              <div class="chart-container">
+                <canvas id="accelChart"></canvas>
+              </div>
+
+              <div class="card-header mt-3">
+                <div class="header-title">
+                  <i data-lucide="compass"></i>
+                  <h3>3-Axis Gyroscope (Gx, Gy, Gz)</h3>
+                </div>
+                <span class="neo-tag">°/s</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="gyroChart"></canvas>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ==================== TAB 4: LIVE ML INFERENCE & CRASH TRIAGE ==================== -->
+        <!-- ==================== TAB 4: ML SIMULATOR & CRASH ==================== -->
         <section id="ml-simulator" class="tab-pane">
           <div class="page-title-box">
             <div>
-              <h1>Live Feast + ML Inference & e-FNOL Crash Triage</h1>
-              <p>Real-time sub-3ms Feast feature store lookups, LightGBM inference, and automated severe crash classification.</p>
+              <h1>Machine Learning Inference &amp; Real-Time Crash Triage</h1>
+              <p>Live Feast-backed LightGBM Driver Risk Scorer, Vehicle RUL Predictor, and physics-calibrated e-FNOL collision classifier.</p>
             </div>
-            <div class="neo-tag">
-              <i data-lucide="zap"></i>
-              <span>GCP Cloud Run Microservice</span>
+            <div class="header-badges-deck">
+              <span class="neo-tag purple"><i data-lucide="cpu"></i> Feast Online (&lt;3ms)</span>
+              <span class="neo-tag lime"><i data-lucide="zap"></i> LightGBM v4.2</span>
             </div>
           </div>
 
-          <div class="grid-2">
-            <!-- Live Driver Risk Predictor -->
-            <div class="neo-chart-card">
-              <div class="neo-chart-header">
-                <div class="neo-chart-title-group">
-                  <h3><i data-lucide="user-check"></i> Feast Online Driver Scorer</h3>
-                  <p>Live feature retrieval &amp; LightGBM inference</p>
+          <div class="ml-cards-grid">
+            <!-- Driver Risk ML Card -->
+            <div class="neo-card ml-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="user-check"></i>
+                  <div>
+                    <h3>Feast Online Driver Risk Scorer</h3>
+                    <div class="card-subtitle">LightGBM Model • Sub-3ms Redis / In-Memory Online Cache</div>
+                  </div>
                 </div>
+                <span class="mono-badge">Driver Model</span>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                  <label style="font-weight: 800; font-size: 0.82rem;">Select Driver Entity:</label>
-                  <select id="ml-driver-id-select" class="filter-select" style="width: 100%; margin-top: 0.3rem;">
-                    <option value="D01">D01 - Aarav Sharma</option>
-                    <option value="D04">D04 - Aditya Patel (Aggressive)</option>
-                    <option value="D08">D08 - Rahul Nair (Aggressive)</option>
-                    <option value="D15">D15 - Praveen Tiwari</option>
+
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Select Driver Profile (Online Entity):</label>
+                  <select class="filter-select w-100" id="ml-driver-id">
+                    <option value="D01">D01 - Rajesh Kumar (Safe &amp; Exemplary • Score: 92.4)</option>
+                    <option value="D04">D04 - Amit Sharma (High Risk / Aggressive • Score: 48.2)</option>
+                    <option value="D07">D07 - Sunil Verma (Moderate Risk • Score: 78.5)</option>
+                    <option value="D14">D14 - Manoj Gupta (Night Shift Rider • Score: 68.0)</option>
+                    <option value="D22">D22 - Priya Nair (Safe Cohort • Score: 96.0)</option>
                   </select>
                 </div>
-                <div>
-                  <label style="font-weight: 800; font-size: 0.82rem;">Simulated Harsh Brakes (/100km): <span id="val-hb">4.0</span></label>
-                  <input type="range" id="slider-hb" min="0" max="25" step="0.5" value="4.0" style="width: 100%;">
+
+                <div class="form-group">
+                  <label class="form-label">Harsh Braking (/100km):</label>
+                  <input type="number" step="0.1" class="neo-input" id="ml-hbr" value="2.4">
                 </div>
-                <div>
-                  <label style="font-weight: 800; font-size: 0.82rem;">Simulated Overspeeding %: <span id="val-spd">10.0%</span></label>
-                  <input type="range" id="slider-spd" min="0" max="80" step="1" value="10.0" style="width: 100%;">
+
+                <div class="form-group">
+                  <label class="form-label">Rapid Accel (/100km):</label>
+                  <input type="number" step="0.1" class="neo-input" id="ml-rar" value="1.8">
                 </div>
-                <button class="btn-neo btn-neo-main" id="btn-run-driver-ml">
-                  <i data-lucide="play"></i> Predict Driver Safety &amp; UBI
-                </button>
-                <div id="driver-ml-result" style="background: #fdf6e2; border: 2px solid #000; border-radius: 8px; padding: 1rem; display: none;"></div>
+
+                <div class="form-group">
+                  <label class="form-label">Speed Compliance (%):</label>
+                  <input type="number" step="0.5" class="neo-input" id="ml-scs" value="92.0">
+                </div>
+              </div>
+
+              <button class="btn-neo btn-neo-green mt-3 w-100 btn-run-ml" id="btn-predict-driver">
+                <i data-lucide="play"></i>
+                <span>Run Sub-3ms Feast Inference &amp; Predict Risk</span>
+              </button>
+
+              <div class="inference-result-box mt-3" id="driver-inference-output">
+                <div class="result-placeholder">
+                  <i data-lucide="sparkles"></i>
+                  <span>Click 'Run Sub-3ms Feast Inference' to retrieve live features and evaluate LightGBM model.</span>
+                </div>
               </div>
             </div>
 
-            <!-- e-FNOL Crash Triage Simulator -->
-            <div class="neo-chart-card">
-              <div class="neo-chart-header">
-                <div class="neo-chart-title-group">
-                  <h3><i data-lucide="alert-octagon"></i> Automated e-FNOL Crash Triage</h3>
-                  <p>Millisecond impact pulse classification &amp; dispatch</p>
+            <!-- Crash Detector e-FNOL Card -->
+            <div class="neo-card ml-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="alert-octagon"></i>
+                  <div>
+                    <h3>Automated e-FNOL Crash Triage</h3>
+                    <div class="card-subtitle">Physics Classifier • Automated Emergency Response</div>
+                  </div>
                 </div>
+                <span class="mono-badge">Crash Triage</span>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                  <label style="font-weight: 800; font-size: 0.82rem;">Preset Impact Scenario:</label>
-                  <select id="crash-preset-select" class="filter-select" style="width: 100%; margin-top: 0.3rem;">
-                    <option value="nominal">Nominal Smooth Riding (No Alert)</option>
-                    <option value="pothole">Deep Pothole Bump (Surface Shock)</option>
-                    <option value="tipover">Low-Speed Tip-Over / Parking Slide</option>
-                    <option value="collision">Critical High-Speed Frontal Collision</option>
+
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Simulated Incident Preset:</label>
+                  <select class="filter-select w-100" id="crash-preset-select">
+                    <option value="crash_severe">💥 Critical High-Speed Frontal Collision (Ay: -18.5 m/s², 5.8g)</option>
+                    <option value="tipover">🛵 Low-Speed Delivery Bike Tip-Over (Ay: -4.2 m/s², 1.4g)</option>
+                    <option value="pothole_shock">⚠️ Deep Pothole / Speedbreaker Jolt (Az: 24.2 m/s², 2.6g)</option>
+                    <option value="harsh_brake">🛑 Emergency Harsh Braking Maneuver (Ay: -6.5 m/s², 1.1g)</option>
                   </select>
                 </div>
-                <button class="btn-neo btn-neo-yellow" id="btn-run-crash-triage">
-                  <i data-lucide="radio"></i> Evaluate Incident Pulse
-                </button>
-                <div id="crash-triage-result" style="background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 1rem; display: none;"></div>
+
+                <div class="form-group">
+                  <label class="form-label">Decel Peak Ay (m/s²):</label>
+                  <input type="number" step="0.1" class="neo-input" id="crash-acc-y" value="-18.5">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Vertical Shock Az (m/s²):</label>
+                  <input type="number" step="0.1" class="neo-input" id="crash-acc-z" value="24.2">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Impact Speed (km/h):</label>
+                  <input type="number" step="1" class="neo-input" id="crash-speed" value="46">
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label">Phone Mount Type:</label>
+                  <select class="filter-select w-100" id="crash-mount">
+                    <option value="Handlebar_Mount">Handlebar Rigid Mount</option>
+                    <option value="Tank_Pouch">Tank Pouch / Bag</option>
+                    <option value="Pocket">Driver Jacket Pocket</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn-neo btn-neo-red mt-3 w-100 btn-run-ml" id="btn-triage-crash">
+                <i data-lucide="activity"></i>
+                <span>Evaluate Kinetic Crash Pulse (e-FNOL)</span>
+              </button>
+
+              <div class="inference-result-box mt-3" id="crash-inference-output">
+                <div class="result-placeholder">
+                  <i data-lucide="activity"></i>
+                  <span>Select an incident preset and click 'Evaluate' to run real-time collision classification.</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ==================== TAB 5: STRATEGIC INSURTECH & SMART CITY ==================== -->
+        <!-- ==================== TAB 5: STRATEGIC USECASES ==================== -->
         <section id="strategic-usecases" class="tab-pane">
           <div class="page-title-box">
             <div>
-              <h1>Strategic InsurTech & Smart City Intelligence</h1>
-              <p>Data monetization avenues: Usage-Based Insurance (UBI) actuarial tiering, and Municipal Pothole GIS Registry.</p>
+              <h1>Strategic Fleet &amp; InsurTech Applications</h1>
+              <p>Commercialization verticals: Actuarial Usage-Based Insurance (UBI) pricing and municipal road roughness GIS heatmaps.</p>
             </div>
-            <div class="neo-tag">
-              <i data-lucide="sparkles"></i>
-              <span>High ROI Enterprise Use Cases</span>
+            <div class="header-badges-deck">
+              <span class="neo-tag lime"><i data-lucide="shield-check"></i> InsurTech Suite</span>
+              <span class="neo-tag blue"><i data-lucide="map-pin"></i> Smart City GIS</span>
             </div>
           </div>
 
-          <div class="usecase-neo-grid">
-            <!-- InsurTech UBI -->
-            <div class="usecase-box">
-              <div class="usecase-header-icon" style="background: var(--chart-1);">
+          <div class="usecases-grid">
+            <!-- UBI Pricing Calculator -->
+            <div class="neo-card usecase-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="calculator"></i>
+                  <div>
+                    <h3>Actuarial Usage-Based Insurance (UBI) Calculator</h3>
+                    <div class="card-subtitle">Pay-How-You-Drive Dynamic Premium Engine</div>
+                  </div>
+                </div>
+                <span class="mono-badge">Actuarial Model</span>
+              </div>
+              
+              <p class="card-desc">Converts telematics safety scores into dynamic actuarial premium tiers, providing up to 25% annual premium discounts for defensive riders while accounting for night driving and speed compliance.</p>
+
+              <div class="form-grid mt-3">
+                <div class="form-group full-width">
+                  <label class="form-label">Driver Profile &amp; Risk Baseline:</label>
+                  <select class="filter-select w-100" id="ubi-driver-select">
+                    <option value="D25">D25 - Ravi Shankar (Safety Score: 95.2 • Tier 1: Gold • 25% Discount)</option>
+                    <option value="D10">D10 - Anand Rao (Safety Score: 80.2 • Tier 2: Silver • 15% Discount)</option>
+                    <option value="D19">D19 - Arjun Bhatia (Safety Score: 77.1 • Tier 3: Bronze • 5% Discount)</option>
+                    <option value="D04">D04 - Aditya Patel (Safety Score: 15.0 • Tier 5: Critical Risk • +25% Surcharge)</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label">Base Annual Policy Premium (INR ₹):</label>
+                  <input type="number" class="neo-input w-100" id="ubi-base-premium" value="12000">
+                </div>
+              </div>
+
+              <button class="btn-neo btn-neo-green mt-3 w-100 btn-run-ml" id="btn-calc-ubi">
                 <i data-lucide="shield-check"></i>
-              </div>
-              <h3>1. Usage-Based Insurance (UBI) Pricing</h3>
-              <p>Actuarial risk tiering derived from continuous sensor streams, discounting policy premiums by up to 25% for exemplary drivers while accurately pricing risk.</p>
-              <div class="usecase-kpi-strip">
-                <div class="kpi-unit">
-                  <div class="k-num">25%</div>
-                  <div class="k-lbl">Max Premium Discount</div>
+                <span>Compute Risk-Adjusted Actuarial Premium</span>
+              </button>
+
+              <div class="inference-result-box mt-3" id="ubi-result-output">
+                <div class="result-placeholder">
+                  <i data-lucide="calculator"></i>
+                  <span>Click button to compute risk-adjusted premium and savings.</span>
                 </div>
-                <div class="kpi-unit">
-                  <div class="k-num">&lt;35%</div>
-                  <div class="k-lbl">Accident Reduction</div>
-                </div>
-              </div>
-              <div class="tags-row">
-                <span>Actuarial Models</span>
-                <span>Dynamic Pricing</span>
-                <span>Loss Ratio</span>
               </div>
             </div>
 
-            <!-- Smart City GIS -->
-            <div class="usecase-box">
-              <div class="usecase-header-icon" style="background: var(--chart-2);">
-                <i data-lucide="map-pin"></i>
-              </div>
-              <h3>2. Crowdsourced Road Roughness &amp; Pothole GIS</h3>
-              <p>Automated tagging of pavement degradation and pothole severity when vertical acceleration shock $|A_z - 9.81| \ge 2.2g$ during high-speed transit.</p>
-              <div class="usecase-kpi-strip">
-                <div class="kpi-unit">
-                  <div class="k-num" id="pothole-detected-kpi">80+</div>
-                  <div class="k-lbl">Potholes Mapped</div>
+            <!-- Pothole GIS Registry -->
+            <div class="neo-card usecase-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <i data-lucide="map-pin"></i>
+                  <div>
+                    <h3>Smart City Crowdsourced Pothole Registry</h3>
+                    <div class="card-subtitle">Automated Road Roughness Index (IRI) Geo-Tagging</div>
+                  </div>
                 </div>
-                <div class="kpi-unit">
-                  <div class="k-num">96%</div>
-                  <div class="k-lbl">Detection Accuracy</div>
-                </div>
+                <span class="mono-badge">Municipal GIS</span>
               </div>
-              <div class="tags-row">
-                <span>Smart City B2G</span>
-                <span>Municipal GIS</span>
-                <span>Road Roughness Index</span>
-              </div>
-            </div>
+              
+              <p class="card-desc">Fleet delivery bikes crowdsource road surface roughness. Accelerometer vertical shocks exceeding 2.2g are tagged with precise GPS coordinates for municipal road maintenance prioritization.</p>
 
-            <!-- EV Fleet Longevity -->
-            <div class="usecase-box">
-              <div class="usecase-header-icon" style="background: var(--chart-5);">
-                <i data-lucide="battery-charging"></i>
-              </div>
-              <h3>3. EV Battery &amp; Drivetrain Thermal Profiling</h3>
-              <p>Tracking rapid discharge surges and thermal strain caused by aggressive acceleration cycles on commercial electric scooters.</p>
-              <div class="usecase-kpi-strip">
-                <div class="kpi-unit">
-                  <div class="k-num">+18 Mo</div>
-                  <div class="k-lbl">Battery Pack Lifespan</div>
-                </div>
-                <div class="kpi-unit">
-                  <div class="k-num">-22%</div>
-                  <div class="k-lbl">Degradation Rate</div>
-                </div>
-              </div>
-              <div class="tags-row">
-                <span>EV Diagnostics</span>
-                <span>Thermal Throttling</span>
-                <span>State of Health (SoH)</span>
+              <div class="pothole-list-container mt-3" id="pothole-list-container">
+                <!-- Populated via app.js -->
               </div>
             </div>
           </div>
@@ -568,23 +997,34 @@
     </div>
   </div>
 
-  <!-- Neobrutalism Entity Detail Modal -->
-  <div id="neo-modal-backdrop" class="neo-modal-backdrop">
+  <!-- Global Modal for Driver Profile -->
+  <div class="neo-modal-backdrop" id="driverModal">
     <div class="neo-modal-box">
       <div class="neo-modal-header">
-        <h3 id="modal-title">Entity Diagnostics Breakdown</h3>
-        <button class="modal-close-btn" id="btn-close-modal">
-          <i data-lucide="x"></i>
-        </button>
+        <h3 id="modalDriverName">Driver Profile</h3>
+        <button class="modal-close-btn" id="closeDriverModal"><i data-lucide="x"></i></button>
       </div>
-      <div class="neo-modal-body" id="modal-body-content"></div>
+      <div class="modal-body" id="modalDriverBody" style="padding: 1.5rem;">
+        <!-- Populated via app.js -->
+      </div>
     </div>
   </div>
 
-  <!-- Application Logic -->
+  <!-- Global Modal for Vehicle Diagnostics -->
+  <div class="neo-modal-backdrop" id="vehicleModal">
+    <div class="neo-modal-box">
+      <div class="neo-modal-header">
+        <h3 id="modalVehicleId">Vehicle Diagnostics</h3>
+        <button class="modal-close-btn" id="closeVehicleModal"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" id="modalVehicleBody" style="padding: 1.5rem;">
+        <!-- Populated via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App -->
   <script src="app.js"></script>
-  <script>
-    lucide.createIcons();
-  </script>
 </body>
+
 </html>

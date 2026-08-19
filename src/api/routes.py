@@ -37,6 +37,8 @@ def get_or_create_streamer(vehicle_id: str) -> TelematicsStreamEngine:
 
 
 def get_feature_store(request: Request) -> FeatureStoreManager:
+    if hasattr(request.app.state, "feature_store") and request.app.state.feature_store is not None:
+        return request.app.state.feature_store
     if hasattr(request.app.state, "feature_store_mgr") and request.app.state.feature_store_mgr is not None:
         return request.app.state.feature_store_mgr
     return FeatureStoreManager()
@@ -90,20 +92,33 @@ async def get_all_vehicles(request: Request):
 @router.get("/api/trips/{trip_id}/telemetry")
 async def get_trip_telemetry(trip_id: str, request: Request):
     fixtures = getattr(request.app.state, "fixtures", {})
-    trip_map = fixtures.get("trips_telemetry_sample", {})
-    if isinstance(trip_map, dict) and trip_id in trip_map:
-        return trip_map[trip_id]
-    elif isinstance(trip_map, list):
-        filtered = [row for row in trip_map if row.get("Trip_ID") == trip_id]
-        if filtered:
-            return filtered
-        return trip_map[:100]
+    sample = fixtures.get("trips_telemetry_sample", {})
+    if isinstance(sample, dict) and trip_id in sample:
+        return sample[trip_id]
     
-    # Fallback to first available trip in dictionary
-    if isinstance(trip_map, dict) and len(trip_map) > 0:
-        first_key = list(trip_map.keys())[0]
-        return trip_map[first_key]
+    # Check lakehouse parquet cache in memory
+    lakehouse_df = getattr(request.app.state, "lakehouse_telemetry", None)
+    if lakehouse_df is not None and not lakehouse_df.empty:
+        sub = lakehouse_df[lakehouse_df["Trip_ID"] == trip_id]
+        if not sub.empty:
+            return sub.to_dict(orient="records")
+            
+    # Check direct parquet file
+    p_path = "data/lakehouse/telemetry.parquet"
+    if os.path.exists(p_path):
+        try:
+            df = pd.read_parquet(p_path)
+            sub = df[df["Trip_ID"] == trip_id]
+            if not sub.empty:
+                return sub.to_dict(orient="records")
+        except Exception:
+            pass
+
+    if isinstance(sample, dict) and len(sample) > 0:
+        # Return first available sample only as last resort
+        return list(sample.values())[0]
     return []
+
 
 
 @router.get("/api/potholes/gis")
@@ -342,21 +357,39 @@ async def calculate_ubi_premium(req: UBICalculationRequest, request: Request):
     fs_mgr = get_feature_store(request)
     fs_data = fs_mgr.get_online_driver_features(req.driver_id)
     
-    score = req.safety_score if req.safety_score is not None else fs_data.get("Safety_Score", 82.0)
+    # Check fixtures if not found or default
+    score = req.safety_score
+    if score is None:
+        if fs_data and "Safety_Score" in fs_data and fs_data["Safety_Score"] != 85.0:
+            score = fs_data["Safety_Score"]
+        else:
+            fixtures = getattr(request.app.state, "fixtures", {})
+            processed_drivers = fixtures.get("processed_drivers", [])
+            for d in processed_drivers:
+                if d.get("Driver_ID") == req.driver_id:
+                    score = d.get("Safety_Score", 82.0)
+                    break
+    if score is None:
+        score = 82.0
+
     base_prem = req.base_annual_premium_inr
 
-    if score >= 85.0:
+    # Dynamic Actuarial Pricing Tiers
+    if score >= 88.0:
         discount_pct = 25.0
-        tier = "Tier 1: Preferred Gold (25% Savings)"
-    elif score >= 75.0:
+        tier = "Tier 1: Preferred Gold (25% Savings • Exemplary Rider)"
+    elif score >= 78.0:
         discount_pct = 15.0
-        tier = "Tier 2: Standard Silver (15% Savings)"
+        tier = "Tier 2: Standard Silver (15% Savings • Defensive Rider)"
     elif score >= 65.0:
-        discount_pct = 0.0
-        tier = "Tier 3: Baseline Neutral (0% Savings)"
+        discount_pct = 5.0
+        tier = "Tier 3: Moderate Bronze (5% Savings • Standard Risk)"
+    elif score >= 50.0:
+        discount_pct = -10.0
+        tier = "Tier 4: Elevated Risk Surcharge (+10% Cost)"
     else:
-        discount_pct = -20.0
-        tier = "Tier 4: High-Risk Surcharge (+20% Cost)"
+        discount_pct = -25.0
+        tier = "Tier 5: Critical Risk Surcharge (+25% Cost)"
 
     adjusted_prem = round(base_prem * (1.0 - (discount_pct / 100.0)), 2)
     savings = round(base_prem - adjusted_prem, 2)
