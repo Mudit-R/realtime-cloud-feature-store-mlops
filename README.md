@@ -1,15 +1,43 @@
 # PulseStar: Real-Time Fleet Telematics & Predictive Maintenance Cloud Platform (GCP)
 
-[![Live Demo on GCP](https://img.shields.io/badge/Live%20Demo-GCP%20Cloud%20Run-34A853.svg?style=for-the-badge&logo=googlecloud)](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)
-[![API Docs](https://img.shields.io/badge/API%20Docs-Swagger%20UI-009688.svg?style=for-the-badge&logo=fastapi)](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
+[![Live Demo on GCP](https://img.shields.io/badge/Live%20Demo-GCP%20Cloud%20Run-34A853.svg?style=for-the-badge&logo=googlecloud)](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/)
+[![API Docs](https://img.shields.io/badge/API%20Docs-Swagger%20UI-009688.svg?style=for-the-badge&logo=fastapi)](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/docs)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg?style=for-the-badge&logo=python)](https://python.org)
 [![Feast Feature Store](https://img.shields.io/badge/Feature%20Store-Feast-orange.svg?style=for-the-badge)](https://feast.dev)
 [![Terraform](https://img.shields.io/badge/IaC-Terraform%20v1.5+-7B42BC.svg?style=for-the-badge&logo=terraform)](https://terraform.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-> 🚀 **Live Production Deployment**:  
-> **Web Dashboard**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/)  
-> **Interactive Swagger API Docs**: [https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs](https://pulsestar-telematics-api-zwkypuwidq-el.a.run.app/docs)
+> 🚀 **Live Production Deployment** (GCP Cloud Run · asia-south1 · Mumbai):  
+> **Web Dashboard**: [https://pulsestar-telematics-api-281362703917.asia-south1.run.app/](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/)  
+> **Interactive Swagger API Docs**: [https://pulsestar-telematics-api-281362703917.asia-south1.run.app/docs](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/docs)
+
+---
+
+## 📸 Platform Visual Showcase
+
+### 1 · Driver Safety & Risk Intelligence
+![Driver Safety & Risk Intelligence](assets/screenshots/01_driver_safety.png)
+*Physics-calibrated driver scoring across 30 fleet riders — Safety Score distribution, 5-Axis Telematics Risk Radar, and Brake vs Accel Dynamics charts side-by-side.*
+
+### 2 · Vehicle Diagnostics & Fleet Health (RUL)
+![Vehicle Diagnostics & Fleet Health](assets/screenshots/02_vehicle_health.png)
+*IMU-derived vibration RMS and gyro jitter for predictive maintenance — Fleet Health Degradation donut and Remaining Useful Life bar chart side-by-side.*
+
+### 3 · Live Cockpit & Kinematics HUD (20Hz WebSocket)
+![Live Cockpit & Kinematics HUD](assets/screenshots/03_live_cockpit_hud.png)
+*Real-time 2D G-G Friction Circle HUD, Kinematic Instrument Cluster (speed, RPM, throttle, brake pressure), Chaos & Anomaly Injector, Leaflet route map, and 20Hz oscilloscope.*
+
+### 4 · Trip Telemetry Waveforms & GIS Analysis
+![Trip Telemetry Waveforms & GIS](assets/screenshots/04_trip_waveforms_gis.png)
+*Interactive GPS breadcrumb replay with synchronized 3-Axis Accelerometer and Gyroscope oscilloscopes across 450 trips.*
+
+### 5 · ML Inference & Real-Time Crash Triage (e-FNOL)
+![ML Inference & Crash Triage](assets/screenshots/05_ml_inference_crash.png)
+*Sub-3ms Feast Online Driver Risk Scorer (LightGBM) and Automated e-FNOL Crash Classifier with emergency SOS dispatch.*
+
+### 6 · Strategic InsurTech & Smart City (UBI + Pothole Registry)
+![InsurTech & Smart City](assets/screenshots/06_insurtech_smart_city.png)
+*Dynamic Usage-Based Insurance actuarial engine with 5-tier risk pricing and crowdsourced municipal pothole anomaly registry.*
 
 An enterprise-grade, cloud-native IoT telematics and predictive maintenance platform built on **Google Cloud Platform (GCP)**. The platform ingests high-frequency tri-axial accelerometer ($A_x, A_y, A_z$), gyroscope ($\omega_x, \omega_y, \omega_z$), and GPS sensor streams from commodity delivery smartphones, transforming raw vibrations and kinematic pulses into real-time driver risk intelligence, mechanical sub-system diagnostics, automated e-FNOL crash triage, and crowdsourced road roughness GIS heatmaps.
 
