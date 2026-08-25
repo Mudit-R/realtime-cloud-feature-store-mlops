@@ -148,34 +148,53 @@ function setupViewToggles() {
 }
 
 // -------------------------------------------------------------
-// 3. Data Loading from FastAPI Backend
+// 3. Data Loading with Static Host / GitHub Pages Fallback
 // -------------------------------------------------------------
+async function fetchEndpointOrFallback(apiPath, fallbackPath) {
+  try {
+    const res = await fetch(apiPath);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    // API endpoint unreachable, fallback
+  }
+  try {
+    const resFallback = await fetch(fallbackPath);
+    if (resFallback.ok) {
+      return await resFallback.json();
+    }
+  } catch (e) {
+    console.warn(`Fallback fetch failed for ${fallbackPath}:`, e);
+  }
+  return null;
+}
+
 async function loadInitialData() {
   try {
-    const [sumRes, dRes, vRes, potRes] = await Promise.all([
-      fetch("/api/fleet/summary"),
-      fetch("/api/drivers"),
-      fetch("/api/vehicles"),
-      fetch("/api/potholes/gis")
+    const [sumData, dData, vData, potData] = await Promise.all([
+      fetchEndpointOrFallback("/api/fleet/summary", "./data/fleet_summary.json"),
+      fetchEndpointOrFallback("/api/drivers", "./data/processed_drivers.json"),
+      fetchEndpointOrFallback("/api/vehicles", "./data/processed_vehicles.json"),
+      fetchEndpointOrFallback("/api/potholes/gis", "./data/pothole_gis_sample.json")
     ]);
 
-    if (sumRes.ok) {
-      fleetSummary = await sumRes.json();
+    if (sumData) {
+      fleetSummary = sumData;
       renderKPIs();
     }
-    if (dRes.ok) {
-      driversData = await dRes.json();
+    if (dData) {
+      driversData = dData;
       renderDrivers(driversData);
       renderDriverAnalyticsCharts(driversData);
     }
-    if (vRes.ok) {
-      vehiclesData = await vRes.json();
+    if (vData) {
+      vehiclesData = vData;
       renderVehicles(vehiclesData);
       renderVehicleAnalyticsCharts(vehiclesData);
     }
-    if (potRes.ok) {
-      const potholeList = await potRes.json();
-      renderPotholes(potholeList);
+    if (potData) {
+      renderPotholes(potData);
     }
 
     // Load initial trip sample
@@ -1332,9 +1351,25 @@ async function loadTripTelemetry(tripId) {
     if (res.ok) {
       const data = await res.json();
       currentTripsSamples[tripId] = data;
+    } else {
+      throw new Error("API route unavailable");
     }
   } catch (err) {
-    console.error("Failed loading trip:", err);
+    if (!currentTripsSamples[tripId]) {
+      try {
+        const fallbackRes = await fetch("./data/trips_telemetry_sample.json");
+        if (fallbackRes.ok) {
+          const allTrips = await fallbackRes.json();
+          if (allTrips && allTrips[tripId]) {
+            currentTripsSamples[tripId] = allTrips[tripId];
+          } else if (allTrips && Object.keys(allTrips).length > 0) {
+            currentTripsSamples[tripId] = Object.values(allTrips)[0];
+          }
+        }
+      } catch (e) {
+        console.warn("Fallback trip load error:", e);
+      }
+    }
   }
 
   // Update Trip Badges

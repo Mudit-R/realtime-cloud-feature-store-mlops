@@ -1,0 +1,722 @@
+[
+  {
+    "Pothole_ID": "PTH_0001",
+    "Latitude": 13.049942,
+    "Longitude": 77.61849,
+    "Vertical_Impact_G": 0.29,
+    "Speed_KMH": 22.2,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T002"
+  },
+  {
+    "Pothole_ID": "PTH_0002",
+    "Latitude": 13.0164,
+    "Longitude": 77.608133,
+    "Vertical_Impact_G": 0.31,
+    "Speed_KMH": 29.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T007"
+  },
+  {
+    "Pothole_ID": "PTH_0003",
+    "Latitude": 13.051962,
+    "Longitude": 77.591746,
+    "Vertical_Impact_G": 0.32,
+    "Speed_KMH": 32.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T009"
+  },
+  {
+    "Pothole_ID": "PTH_0004",
+    "Latitude": 13.027705,
+    "Longitude": 77.613316,
+    "Vertical_Impact_G": 0.28,
+    "Speed_KMH": 26.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T013"
+  },
+  {
+    "Pothole_ID": "PTH_0005",
+    "Latitude": 13.034327,
+    "Longitude": 77.609867,
+    "Vertical_Impact_G": 0.37,
+    "Speed_KMH": 29.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T017"
+  },
+  {
+    "Pothole_ID": "PTH_0006",
+    "Latitude": 13.040021,
+    "Longitude": 77.615757,
+    "Vertical_Impact_G": 0.3,
+    "Speed_KMH": 33.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T017"
+  },
+  {
+    "Pothole_ID": "PTH_0007",
+    "Latitude": 13.041255,
+    "Longitude": 77.619211,
+    "Vertical_Impact_G": 0.34,
+    "Speed_KMH": 34.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T017"
+  },
+  {
+    "Pothole_ID": "PTH_0008",
+    "Latitude": 13.029566,
+    "Longitude": 77.600683,
+    "Vertical_Impact_G": 0.31,
+    "Speed_KMH": 27.4,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T018"
+  },
+  {
+    "Pothole_ID": "PTH_0009",
+    "Latitude": 13.015892,
+    "Longitude": 77.60438,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 31.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T018"
+  },
+  {
+    "Pothole_ID": "PTH_0010",
+    "Latitude": 13.022838,
+    "Longitude": 77.601705,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 30.0,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T018"
+  },
+  {
+    "Pothole_ID": "PTH_0011",
+    "Latitude": 13.01895,
+    "Longitude": 77.578627,
+    "Vertical_Impact_G": 0.27,
+    "Speed_KMH": 23.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T019"
+  },
+  {
+    "Pothole_ID": "PTH_0012",
+    "Latitude": 13.021755,
+    "Longitude": 77.576308,
+    "Vertical_Impact_G": 0.25,
+    "Speed_KMH": 17.3,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T019"
+  },
+  {
+    "Pothole_ID": "PTH_0013",
+    "Latitude": 13.025843,
+    "Longitude": 77.575321,
+    "Vertical_Impact_G": 0.28,
+    "Speed_KMH": 19.3,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T019"
+  },
+  {
+    "Pothole_ID": "PTH_0014",
+    "Latitude": 13.026829,
+    "Longitude": 77.596819,
+    "Vertical_Impact_G": 0.33,
+    "Speed_KMH": 32.4,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T027"
+  },
+  {
+    "Pothole_ID": "PTH_0015",
+    "Latitude": 12.989472,
+    "Longitude": 77.650067,
+    "Vertical_Impact_G": 0.39,
+    "Speed_KMH": 30.2,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T031"
+  },
+  {
+    "Pothole_ID": "PTH_0016",
+    "Latitude": 12.980642,
+    "Longitude": 77.65679,
+    "Vertical_Impact_G": 0.49,
+    "Speed_KMH": 32.2,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T031"
+  },
+  {
+    "Pothole_ID": "PTH_0017",
+    "Latitude": 12.984183,
+    "Longitude": 77.662981,
+    "Vertical_Impact_G": 0.38,
+    "Speed_KMH": 33.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T031"
+  },
+  {
+    "Pothole_ID": "PTH_0018",
+    "Latitude": 12.986544,
+    "Longitude": 77.647348,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 15.7,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0019",
+    "Latitude": 12.989172,
+    "Longitude": 77.650292,
+    "Vertical_Impact_G": 0.39,
+    "Speed_KMH": 23.9,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0020",
+    "Latitude": 12.991114,
+    "Longitude": 77.648123,
+    "Vertical_Impact_G": 0.47,
+    "Speed_KMH": 27.7,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0021",
+    "Latitude": 12.987277,
+    "Longitude": 77.65453,
+    "Vertical_Impact_G": 0.33,
+    "Speed_KMH": 29.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0022",
+    "Latitude": 12.986417,
+    "Longitude": 77.649498,
+    "Vertical_Impact_G": 0.34,
+    "Speed_KMH": 24.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0023",
+    "Latitude": 12.988103,
+    "Longitude": 77.64715,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 27.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T032"
+  },
+  {
+    "Pothole_ID": "PTH_0024",
+    "Latitude": 12.978255,
+    "Longitude": 77.640507,
+    "Vertical_Impact_G": 0.25,
+    "Speed_KMH": 17.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0025",
+    "Latitude": 12.969529,
+    "Longitude": 77.639114,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 26.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0026",
+    "Latitude": 12.965498,
+    "Longitude": 77.633756,
+    "Vertical_Impact_G": 0.39,
+    "Speed_KMH": 31.0,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0027",
+    "Latitude": 12.963631,
+    "Longitude": 77.631747,
+    "Vertical_Impact_G": 0.37,
+    "Speed_KMH": 26.1,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0028",
+    "Latitude": 12.962215,
+    "Longitude": 77.636529,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 28.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0029",
+    "Latitude": 12.959146,
+    "Longitude": 77.635259,
+    "Vertical_Impact_G": 0.42,
+    "Speed_KMH": 31.6,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T033"
+  },
+  {
+    "Pothole_ID": "PTH_0030",
+    "Latitude": 12.967926,
+    "Longitude": 77.649923,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 25.1,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0031",
+    "Latitude": 12.966642,
+    "Longitude": 77.634652,
+    "Vertical_Impact_G": 0.24,
+    "Speed_KMH": 35.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0032",
+    "Latitude": 12.972379,
+    "Longitude": 77.634393,
+    "Vertical_Impact_G": 0.34,
+    "Speed_KMH": 27.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0033",
+    "Latitude": 12.972429,
+    "Longitude": 77.63713,
+    "Vertical_Impact_G": 0.39,
+    "Speed_KMH": 36.7,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0034",
+    "Latitude": 12.97609,
+    "Longitude": 77.639538,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 35.2,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0035",
+    "Latitude": 12.973959,
+    "Longitude": 77.641805,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 29.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0036",
+    "Latitude": 12.979938,
+    "Longitude": 77.638104,
+    "Vertical_Impact_G": 0.55,
+    "Speed_KMH": 36.5,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T034"
+  },
+  {
+    "Pothole_ID": "PTH_0037",
+    "Latitude": 12.991873,
+    "Longitude": 77.64018,
+    "Vertical_Impact_G": 0.54,
+    "Speed_KMH": 26.3,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T035"
+  },
+  {
+    "Pothole_ID": "PTH_0038",
+    "Latitude": 12.986277,
+    "Longitude": 77.638377,
+    "Vertical_Impact_G": 0.34,
+    "Speed_KMH": 32.7,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T035"
+  },
+  {
+    "Pothole_ID": "PTH_0039",
+    "Latitude": 12.985671,
+    "Longitude": 77.64192,
+    "Vertical_Impact_G": 0.28,
+    "Speed_KMH": 34.2,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T035"
+  },
+  {
+    "Pothole_ID": "PTH_0040",
+    "Latitude": 12.992371,
+    "Longitude": 77.631554,
+    "Vertical_Impact_G": 0.27,
+    "Speed_KMH": 15.4,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0041",
+    "Latitude": 12.994512,
+    "Longitude": 77.630609,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 17.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0042",
+    "Latitude": 12.994059,
+    "Longitude": 77.628642,
+    "Vertical_Impact_G": 0.31,
+    "Speed_KMH": 19.2,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0043",
+    "Latitude": 12.988956,
+    "Longitude": 77.628464,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 25.9,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0044",
+    "Latitude": 12.985475,
+    "Longitude": 77.639177,
+    "Vertical_Impact_G": 0.27,
+    "Speed_KMH": 29.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0045",
+    "Latitude": 12.987557,
+    "Longitude": 77.640745,
+    "Vertical_Impact_G": 0.35,
+    "Speed_KMH": 24.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0046",
+    "Latitude": 12.988966,
+    "Longitude": 77.641504,
+    "Vertical_Impact_G": 0.37,
+    "Speed_KMH": 28.0,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0047",
+    "Latitude": 12.987801,
+    "Longitude": 77.638551,
+    "Vertical_Impact_G": 0.38,
+    "Speed_KMH": 30.2,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T036"
+  },
+  {
+    "Pothole_ID": "PTH_0048",
+    "Latitude": 12.963135,
+    "Longitude": 77.626711,
+    "Vertical_Impact_G": 0.3,
+    "Speed_KMH": 24.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0049",
+    "Latitude": 12.965832,
+    "Longitude": 77.628038,
+    "Vertical_Impact_G": 0.28,
+    "Speed_KMH": 28.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0050",
+    "Latitude": 12.962592,
+    "Longitude": 77.631529,
+    "Vertical_Impact_G": 0.44,
+    "Speed_KMH": 36.7,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0051",
+    "Latitude": 12.959305,
+    "Longitude": 77.629806,
+    "Vertical_Impact_G": 0.25,
+    "Speed_KMH": 35.3,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0052",
+    "Latitude": 12.965432,
+    "Longitude": 77.625179,
+    "Vertical_Impact_G": 0.55,
+    "Speed_KMH": 38.1,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0053",
+    "Latitude": 12.968792,
+    "Longitude": 77.623816,
+    "Vertical_Impact_G": 0.36,
+    "Speed_KMH": 34.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0054",
+    "Latitude": 12.968624,
+    "Longitude": 77.620067,
+    "Vertical_Impact_G": 0.51,
+    "Speed_KMH": 35.7,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0055",
+    "Latitude": 12.96804,
+    "Longitude": 77.619814,
+    "Vertical_Impact_G": 0.41,
+    "Speed_KMH": 39.4,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0056",
+    "Latitude": 12.968651,
+    "Longitude": 77.627007,
+    "Vertical_Impact_G": 0.44,
+    "Speed_KMH": 36.0,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0057",
+    "Latitude": 12.967313,
+    "Longitude": 77.630463,
+    "Vertical_Impact_G": 0.42,
+    "Speed_KMH": 36.2,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T037"
+  },
+  {
+    "Pothole_ID": "PTH_0058",
+    "Latitude": 12.973098,
+    "Longitude": 77.627375,
+    "Vertical_Impact_G": 0.65,
+    "Speed_KMH": 16.5,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0059",
+    "Latitude": 12.970885,
+    "Longitude": 77.622387,
+    "Vertical_Impact_G": 0.23,
+    "Speed_KMH": 30.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0060",
+    "Latitude": 12.974453,
+    "Longitude": 77.625302,
+    "Vertical_Impact_G": 0.51,
+    "Speed_KMH": 32.0,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0061",
+    "Latitude": 12.977579,
+    "Longitude": 77.624244,
+    "Vertical_Impact_G": 0.33,
+    "Speed_KMH": 31.4,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0062",
+    "Latitude": 12.979053,
+    "Longitude": 77.630468,
+    "Vertical_Impact_G": 0.31,
+    "Speed_KMH": 31.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0063",
+    "Latitude": 12.97675,
+    "Longitude": 77.630112,
+    "Vertical_Impact_G": 0.51,
+    "Speed_KMH": 32.4,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0064",
+    "Latitude": 12.970739,
+    "Longitude": 77.628402,
+    "Vertical_Impact_G": 0.25,
+    "Speed_KMH": 27.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T038"
+  },
+  {
+    "Pothole_ID": "PTH_0065",
+    "Latitude": 12.970987,
+    "Longitude": 77.642281,
+    "Vertical_Impact_G": 0.41,
+    "Speed_KMH": 15.5,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0066",
+    "Latitude": 12.973656,
+    "Longitude": 77.63969,
+    "Vertical_Impact_G": 0.31,
+    "Speed_KMH": 35.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0067",
+    "Latitude": 12.971033,
+    "Longitude": 77.635544,
+    "Vertical_Impact_G": 0.42,
+    "Speed_KMH": 38.4,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0068",
+    "Latitude": 12.974889,
+    "Longitude": 77.633868,
+    "Vertical_Impact_G": 0.33,
+    "Speed_KMH": 40.0,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0069",
+    "Latitude": 12.970209,
+    "Longitude": 77.635861,
+    "Vertical_Impact_G": 0.24,
+    "Speed_KMH": 37.0,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0070",
+    "Latitude": 12.96746,
+    "Longitude": 77.633338,
+    "Vertical_Impact_G": 0.36,
+    "Speed_KMH": 35.5,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0071",
+    "Latitude": 12.969758,
+    "Longitude": 77.630253,
+    "Vertical_Impact_G": 0.34,
+    "Speed_KMH": 36.6,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0072",
+    "Latitude": 12.974557,
+    "Longitude": 77.630772,
+    "Vertical_Impact_G": 0.28,
+    "Speed_KMH": 34.1,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0073",
+    "Latitude": 12.971248,
+    "Longitude": 77.629093,
+    "Vertical_Impact_G": 0.46,
+    "Speed_KMH": 35.3,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T039"
+  },
+  {
+    "Pothole_ID": "PTH_0074",
+    "Latitude": 12.978062,
+    "Longitude": 77.634644,
+    "Vertical_Impact_G": 0.41,
+    "Speed_KMH": 27.7,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0075",
+    "Latitude": 12.979337,
+    "Longitude": 77.637528,
+    "Vertical_Impact_G": 0.25,
+    "Speed_KMH": 30.0,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0076",
+    "Latitude": 12.96833,
+    "Longitude": 77.635871,
+    "Vertical_Impact_G": 0.48,
+    "Speed_KMH": 37.2,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0077",
+    "Latitude": 12.964307,
+    "Longitude": 77.629904,
+    "Vertical_Impact_G": 0.58,
+    "Speed_KMH": 31.9,
+    "Severity": "Severe Impact",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0078",
+    "Latitude": 12.963308,
+    "Longitude": 77.626769,
+    "Vertical_Impact_G": 0.26,
+    "Speed_KMH": 31.3,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0079",
+    "Latitude": 12.962859,
+    "Longitude": 77.629399,
+    "Vertical_Impact_G": 0.3,
+    "Speed_KMH": 28.7,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T040"
+  },
+  {
+    "Pothole_ID": "PTH_0080",
+    "Latitude": 12.962266,
+    "Longitude": 77.632582,
+    "Vertical_Impact_G": 0.37,
+    "Speed_KMH": 30.8,
+    "Severity": "Moderate Bump",
+    "Trip_ID": "T040"
+  }
+]
