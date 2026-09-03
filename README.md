@@ -7,13 +7,13 @@
 [![Terraform](https://img.shields.io/badge/IaC-Terraform%20v1.5+-7B42BC.svg?style=for-the-badge&logo=terraform)](https://terraform.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-> 🚀 **Live Production Deployment** (GCP Cloud Run · asia-south1 · Mumbai):  
+>  **Live Production Deployment** (GCP Cloud Run · asia-south1 · Mumbai):  
 > **Web Dashboard**: [https://pulsestar-telematics-api-281362703917.asia-south1.run.app/](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/)  
 > **Interactive Swagger API Docs**: [https://pulsestar-telematics-api-281362703917.asia-south1.run.app/docs](https://pulsestar-telematics-api-281362703917.asia-south1.run.app/docs)
 
 ---
 
-## 📸 Platform Visual Showcase
+##  Platform Visual Showcase
 
 ### 1 · Driver Safety & Risk Intelligence
 ![Driver Safety & Risk Intelligence](assets/screenshots/01_driver_safety.png)
@@ -88,16 +88,16 @@ An enterprise-grade, cloud-native IoT telematics and predictive maintenance plat
                                                                    ▼
 +-----------------------------------------------------------------------------------------+
 |                  NEOBRUTALIST FLEET TELEMATICS & GIS DASHBOARD                          |
-|  • 🏎️ F1 2D G-G Friction Circle HUD Canvas with Dynamic Fading Trajectory Trail          |
-|  • ⚡ 20Hz Kinematic Instruments: Speedometer (km/h), RPM, Throttle %, Brake Bar        |
-|  • 🗺️ Synchronized Real-Time Moving Vehicle on Leaflet GIS Map with Heading Vector       |
-|  • 💥 Chaos & Sensor Anomaly Injector (Pothole Shock, Hard Brake, High-G Swerve, Crash) |
+|  • ️ F1 2D G-G Friction Circle HUD Canvas with Dynamic Fading Trajectory Trail          |
+|  •  20Hz Kinematic Instruments: Speedometer (km/h), RPM, Throttle %, Brake Bar        |
+|  • ️ Synchronized Real-Time Moving Vehicle on Leaflet GIS Map with Heading Vector       |
+|  •  Chaos & Sensor Anomaly Injector (Pothole Shock, Hard Brake, High-G Swerve, Crash) |
 +-----------------------------------------------------------------------------------------+
 ```
 
 ---
 
-## 📡 Where Does the Live Data Come From?
+##  Where Does the Live Data Come From?
 
 The platform operates on a **dual-tier real-time data architecture**:
 
